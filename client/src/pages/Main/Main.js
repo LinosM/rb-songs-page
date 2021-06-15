@@ -598,6 +598,7 @@ function Main() {
 
         <div className="mt-5">
           <div className="is-size-2 has-text-centered has-text-light">Last 10 Releases</div>
+          <div className="is-size-6 has-text-centered has-text-white is-italic">Last Updated: {allSongs[0] && moment(allSongs[0].updated_date).format("YYYY-MM-DD")}</div>
           <hr />
           <Table sortTable={sortTable} upDown={sortHeader} songs={splitSongs.lastTen} openModal={openModal} />
         </div>
