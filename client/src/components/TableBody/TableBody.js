@@ -1,6 +1,10 @@
 import React from "react";
 import moment from "moment";
-import "./index.css"
+import "./index.css";
+
+function hello() {
+  console.log("hello");
+}
 
 const TableBody = props => (
   <tr>
@@ -15,7 +19,11 @@ const TableBody = props => (
     <td>{props.song.d}</td>
     <td>{props.song.k}</td>
     <td>{props.song.v}</td>
-    <td><a href="#" value={props.song.video} className="preview" onClick={props.openModal} name={props.song.song_name} artist={props.song.artist}>Preview</a></td>
+    {/* <td><a href="#" value={props.song.video} className="preview" onClick={props.openModal} name={props.song.song_name} artist={props.song.artist}>Preview</a></td> */}
+    {/* <td><FontAwesomeIcon icon={faYoutube} value={props.song.video} className="preview" onClick={props.openModal} name={props.song.song_name} artist={props.song.artist} /></td> */}
+    <td value={props.song.video} onClick={props.openModal} name={props.song.song_name} artist={props.song.artist}>
+      <i className="fa fa-youtube-play fa-2x" value={props.song.video} onClick={props.openModal} name={props.song.song_name} artist={props.song.artist}></i>
+    </td>
   </tr>
 );
 

@@ -588,7 +588,7 @@ function Main() {
         <div className="mt-5">
           <div className="is-size-2 has-text-centered has-text-light">Last 10 Releases</div>
           <hr />
-          <Table sortTable={sortTable} upDown={sortHeader} songs={splitSongs.lastTen} />
+          <Table sortTable={sortTable} upDown={sortHeader} songs={splitSongs.lastTen} openModal={openModal} />
         </div>
 
       </div>
