@@ -543,41 +543,52 @@ function Main() {
         >
         </input>
 
+        <span className="is-size-6 has-text-white is-italic">Last Updated: {splitSongs.pony[0] && moment(splitSongs.pony[0].updated_date).format("YYYY-MM-DD")}</span>
         {filteredSplitSongs.pony.length !== 0 &&
           <Button value={"pony"} onClick={openTable} label={"Pony Songs"} length={filteredSplitSongs.pony.length} />
         }
         {showTable.pony && filteredSplitSongs.pony.length !== 0 &&
           <Table sortTable={sortTable} upDown={sortHeader} songs={filteredSplitSongs.pony} openModal={openModal} />
         }
+        <br />
 
+        <span className="is-size-6 has-text-white is-italic">Last Updated: {splitSongs.anime[0] && moment(splitSongs.anime[0].updated_date).format("YYYY-MM-DD")}</span>
         {filteredSplitSongs.anime.length !== 0 &&
           <Button value={"anime"} onClick={openTable} label={"Anime / Japanese Songs"} length={filteredSplitSongs.anime.length} />
         }
         {showTable.anime && filteredSplitSongs.anime.length !== 0 &&
           <Table sortTable={sortTable} upDown={sortHeader} songs={filteredSplitSongs.anime} openModal={openModal} />
         }
+        <br />
 
+        <span className="is-size-6 has-text-white is-italic">Last Updated: {splitSongs.vg[0] && moment(splitSongs.vg[0].updated_date).format("YYYY-MM-DD")}</span>
         {filteredSplitSongs.vg.length !== 0 &&
           <Button value={"vg"} onClick={openTable} label={"Video Game Music"} length={filteredSplitSongs.vg.length} />
         }
         {showTable.vg && filteredSplitSongs.vg.length !== 0 &&
           <Table sortTable={sortTable} upDown={sortHeader} songs={filteredSplitSongs.vg} openModal={openModal} />
         }
+        <br />
 
+        <span className="is-size-6 has-text-white is-italic">Last Updated: {splitSongs.reg[0] && moment(splitSongs.reg[0].updated_date).format("YYYY-MM-DD")}</span>
         {filteredSplitSongs.reg.length !== 0 &&
           <Button value={"reg"} onClick={openTable} label={"Normie Music"} length={filteredSplitSongs.reg.length} />
         }
         {showTable.reg && filteredSplitSongs.reg.length !== 0 &&
           <Table sortTable={sortTable} upDown={sortHeader} songs={filteredSplitSongs.reg} openModal={openModal} />
         }
+        <br />
 
+        <span className="is-size-6 has-text-white is-italic">Last Updated: {splitSongs.indie[0] && moment(splitSongs.indie[0].updated_date).format("YYYY-MM-DD")}</span>
         {filteredSplitSongs.indie.length !== 0 &&
           <Button value={"indie"} onClick={openTable} label={"Indies"} length={filteredSplitSongs.indie.length} />
         }
         {showTable.indie && filteredSplitSongs.indie.length !== 0 &&
           <Table sortTable={sortTable} upDown={sortHeader} songs={filteredSplitSongs.indie} openModal={openModal} />
         }
+        <br />
 
+        <span className="is-size-6 has-text-white is-italic">Last Updated: {splitSongs.tv[0] && moment(splitSongs.indie[0].updated_date).format("YYYY-MM-DD")}</span>
         {filteredSplitSongs.tv.length !== 0 &&
           <Button value={"tv"} onClick={openTable} label={"TV / Cartoon Shows"} length={filteredSplitSongs.tv.length} />
         }
