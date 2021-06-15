@@ -532,7 +532,7 @@ function Main() {
         </div>
       </Modal>
       <div className="container">
-        <div className="has-text-centered title is-2 has-text-light">Linos' Rock Band Charts</div>
+        <div className="has-text-centered title is-2 has-text-light pt-5">Linos' Rock Band Charts</div>
         <div className="has-text-centered title is-4 has-text-light">Number of songs: {allSongs.length}</div>
 
         <input
