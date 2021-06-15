@@ -14,22 +14,22 @@ const Table = props => (
             <FontAwesomeIcon value="updated" onClick={props.sortTable} icon={props.upDown.updated ? faSortNumericUpAlt : faSortNumericDownAlt} />
           </span>
         </th>
-        <th scope="col" value="artist" className="clickable" onClick={props.sortTable}>
+        <th scope="col" className="clickable" value="artist" onClick={props.sortTable}>
           Artist
           <span className="ml-1">
-            <FontAwesomeIcon icon={props.upDown.artist ? faSortAlphaUp : faSortAlphaDown} />
+            <FontAwesomeIcon value="artist" onClick={props.sortTable} icon={props.upDown.artist ? faSortAlphaUp : faSortAlphaDown} />
           </span>
         </th>
-        <th scope="col" value="song" className="clickable" onClick={props.sortTable}>
+        <th scope="col" className="clickable" value="song" onClick={props.sortTable}>
           Song
           <span className="ml-1">
-            <FontAwesomeIcon icon={props.upDown.song ? faSortAlphaUp : faSortAlphaDown} />
+            <FontAwesomeIcon value="song" onClick={props.sortTable} icon={props.upDown.song ? faSortAlphaUp : faSortAlphaDown} />
           </span>
         </th>
-        <th scope="col" value="source" className="clickable" onClick={props.sortTable}>
+        <th scope="col" className="clickable" value="source" onClick={props.sortTable}>
           Source
           <span className="ml-1">
-            <FontAwesomeIcon icon={props.upDown.source ? faSortAlphaUp : faSortAlphaDown} />
+            <FontAwesomeIcon value="source" onClick={props.sortTable} icon={props.upDown.source ? faSortAlphaUp : faSortAlphaDown} />
           </span>
         </th>
         <th className="date" scope="col">Release Date</th>
