@@ -142,7 +142,6 @@ function Main() {
   }
 
   function searchSong(event) {
-    console.log(event.currentTarget.value);
     let filter = event.currentTarget.value;
 
     const filteredPony = splitSongs.pony.filter(song => {
@@ -191,7 +190,6 @@ function Main() {
       vg: filteredVg,
       tv: filteredTv
     });
-    console.log(filteredSplitSongs);
   }
 
   // Combines all the song's metadata into one string to search through
@@ -200,7 +198,6 @@ function Main() {
   }
 
   function sortTable(event) {
-    console.log("clicked");
     let sortArray = {
       pony: [],
       anime: [],
@@ -499,7 +496,6 @@ function Main() {
   }
 
   function openModal(event) {
-    console.log(event.target.getAttribute("value"));
     setIsOpen(true);
     let videoID = event.target.getAttribute("value").substring(event.target.getAttribute("value").length - 11);
     setVideoInfo({
