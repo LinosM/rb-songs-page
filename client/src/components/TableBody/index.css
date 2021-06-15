@@ -1,0 +1,7 @@
+.date {
+    white-space: nowrap;
+}
+
+.preview:hover {
+    cursor: pointer;
+}

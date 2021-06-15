@@ -1,0 +1,11 @@
+th {
+    user-select: none;
+}
+
+.clickable:hover {
+    background-color: aliceblue;
+}
+
+table {
+    border: 3px solid white;
+}

@@ -1,0 +1,14 @@
+.button.has-text-left {
+    justify-content: flex-start;
+    float: left;
+}
+
+.button.has-text-right {
+    justify-content: flex-end;
+    float: right;
+}
+
+.justify-content-start {
+    justify-content: flex-start;
+    float: left;
+}
