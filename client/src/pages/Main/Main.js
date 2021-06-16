@@ -111,6 +111,7 @@ function Main() {
       .catch(err => console.log(err))
   }, []);
 
+  // Clicking a button category will reveal it's table of songs
   function openTable(event) {
     let category = event.currentTarget.value;
 
@@ -145,60 +146,83 @@ function Main() {
     // }
   }
 
+  // Runs a real time search of a song in every category, filteredSplitSongs object is updated after every result update
   function searchSong(event) {
     let filter = event.currentTarget.value;
+    let object = {};
 
-    const filteredPony = splitSongs.pony.filter(song => {
-      let values = filterValues(song);
-      if (values.indexOf(filter.toLowerCase()) !== -1) {
-        return song
-      };
-    })
-    const filteredAnime = splitSongs.anime.filter(song => {
-      let values = filterValues(song);
-      if (values.indexOf(filter.toLowerCase()) !== -1) {
-        return song
-      };
-    })
-    const filteredReg = splitSongs.reg.filter(song => {
-      let values = filterValues(song);
-      if (values.indexOf(filter.toLowerCase()) !== -1) {
-        return song
-      };
-    })
-    const filteredTv = splitSongs.tv.filter(song => {
-      let values = filterValues(song);
-      if (values.indexOf(filter.toLowerCase()) !== -1) {
-        return song
-      };
-    })
-    const filteredIndie = splitSongs.indie.filter(song => {
-      let values = filterValues(song);
-      if (values.indexOf(filter.toLowerCase()) !== -1) {
-        return song
-      };
-    })
-    const filteredVg = splitSongs.vg.filter(song => {
-      let values = filterValues(song);
-      if (values.indexOf(filter.toLowerCase()) !== -1) {
-        return song
-      };
-    })
+    for (let array in splitSongs) {
+      let searchedSongs = splitSongs[array].filter(song => {
+        let values = filterValues(song);
+        if (values.indexOf(filter.toLowerCase()) !== -1) {
+          return song
+        };
+      })
 
-    setFilteredSplitSongs({
-      ...filteredSplitSongs,
-      pony: filteredPony,
-      anime: filteredAnime,
-      reg: filteredReg,
-      indie: filteredIndie,
-      vg: filteredVg,
-      tv: filteredTv
-    });
+      object[array] = searchedSongs;
+    }
+    setFilteredSplitSongs(object);
+
+    // const filteredPony = splitSongs.pony.filter(song => {
+    //   let values = filterValues(song);
+    //   if (values.indexOf(filter.toLowerCase()) !== -1) {
+    //     return song
+    //   };
+    // })
+    // const filteredAnime = splitSongs.anime.filter(song => {
+    //   let values = filterValues(song);
+    //   if (values.indexOf(filter.toLowerCase()) !== -1) {
+    //     return song
+    //   };
+    // })
+    // const filteredReg = splitSongs.reg.filter(song => {
+    //   let values = filterValues(song);
+    //   if (values.indexOf(filter.toLowerCase()) !== -1) {
+    //     return song
+    //   };
+    // })
+    // const filteredTv = splitSongs.tv.filter(song => {
+    //   let values = filterValues(song);
+    //   if (values.indexOf(filter.toLowerCase()) !== -1) {
+    //     return song
+    //   };
+    // })
+    // const filteredIndie = splitSongs.indie.filter(song => {
+    //   let values = filterValues(song);
+    //   if (values.indexOf(filter.toLowerCase()) !== -1) {
+    //     return song
+    //   };
+    // })
+    // const filteredVg = splitSongs.vg.filter(song => {
+    //   let values = filterValues(song);
+    //   if (values.indexOf(filter.toLowerCase()) !== -1) {
+    //     return song
+    //   };
+    // })
+
+    // setFilteredSplitSongs({
+    //   ...filteredSplitSongs,
+    //   pony: filteredPony,
+    //   anime: filteredAnime,
+    //   reg: filteredReg,
+    //   indie: filteredIndie,
+    //   vg: filteredVg,
+    //   tv: filteredTv
+    // });
   }
 
   // Combines all the song's metadata into one string to search through
   function filterValues(song) {
-    return song.updated_date + " " + song.c3.toLowerCase() + " " + song.song_name.toLowerCase() + " " + song.artist.toLowerCase() + " " + song.release_date + song.source.toLowerCase() + song.author.toLowerCase() + song.second_author.toLowerCase();
+    let string = song.updated_date + " " + song.c3.toLowerCase() + " " + song.song_name.toLowerCase() + " " + song.artist.toLowerCase() + " " + song.release_date + song.source.toLowerCase() + song.author.toLowerCase() + song.second_author.toLowerCase();
+
+    // Allows the user to type an instrument in the search bar and return songs with that instrument
+    if (song.g === "G") string += " guitar";
+    if (song.b === "B") string += " bass";
+    if (song.d === "D") string += " drums";
+    if (song.k === "K") string += " keys";
+    if (song.v === "V") string += " vocals";
+
+    return string;
   }
 
   function sortTable(event) {
@@ -547,54 +571,68 @@ function Main() {
         >
         </input>
 
-        <span className="is-size-6 has-text-white is-italic">Last Updated: {allSongs[0] && moment(allSongs.filter(e => e.type === "pony")[0].updated_date).format("YYYY-MM-DD")}</span>
+
         {filteredSplitSongs.pony.length !== 0 &&
-          <Button value={"pony"} onClick={openTable} label={"Pony Songs"} length={filteredSplitSongs.pony.length} />
+          <>
+            <span className="is-size-6 has-text-white is-italic">Last Updated: {allSongs[0] && moment(allSongs.filter(e => e.type === "pony")[0].updated_date).format("YYYY-MM-DD")}</span>
+            <Button value={"pony"} onClick={openTable} label={"Pony Songs"} length={filteredSplitSongs.pony.length} />
+          </>
         }
         {showTable.pony && filteredSplitSongs.pony.length !== 0 &&
           <Table sortTable={sortTable} upDown={sortHeader} songs={filteredSplitSongs.pony} openModal={openModal} />
         }
         <br />
 
-        <span className="is-size-6 has-text-white is-italic">Last Updated: {allSongs[0] && moment(allSongs.filter(e => e.type === "anime")[0].updated_date).format("YYYY-MM-DD")}</span>
         {filteredSplitSongs.anime.length !== 0 &&
-          <Button value={"anime"} onClick={openTable} label={"Anime / Japanese Songs"} length={filteredSplitSongs.anime.length} />
+          <>
+            <span className="is-size-6 has-text-white is-italic">Last Updated: {allSongs[0] && moment(allSongs.filter(e => e.type === "anime")[0].updated_date).format("YYYY-MM-DD")}</span>
+            <Button value={"anime"} onClick={openTable} label={"Anime / Japanese Songs"} length={filteredSplitSongs.anime.length} />
+          </>
         }
         {showTable.anime && filteredSplitSongs.anime.length !== 0 &&
           <Table sortTable={sortTable} upDown={sortHeader} songs={filteredSplitSongs.anime} openModal={openModal} />
         }
         <br />
 
-        <span className="is-size-6 has-text-white is-italic">Last Updated: {allSongs[0] && moment(allSongs.filter(e => e.type === "vg")[0].updated_date).format("YYYY-MM-DD")}</span>
         {filteredSplitSongs.vg.length !== 0 &&
-          <Button value={"vg"} onClick={openTable} label={"Video Game Music"} length={filteredSplitSongs.vg.length} />
+          <>
+            <span className="is-size-6 has-text-white is-italic">Last Updated: {allSongs[0] && moment(allSongs.filter(e => e.type === "vg")[0].updated_date).format("YYYY-MM-DD")}</span>
+            <Button value={"vg"} onClick={openTable} label={"Video Game Music"} length={filteredSplitSongs.vg.length} />
+          </>
         }
         {showTable.vg && filteredSplitSongs.vg.length !== 0 &&
           <Table sortTable={sortTable} upDown={sortHeader} songs={filteredSplitSongs.vg} openModal={openModal} />
         }
         <br />
 
-        <span className="is-size-6 has-text-white is-italic">Last Updated: {allSongs[0] && moment(allSongs.filter(e => e.type === "reg")[0].updated_date).format("YYYY-MM-DD")}</span>
+
         {filteredSplitSongs.reg.length !== 0 &&
-          <Button value={"reg"} onClick={openTable} label={"Normie Music"} length={filteredSplitSongs.reg.length} />
+          <>
+            <span className="is-size-6 has-text-white is-italic">Last Updated: {allSongs[0] && moment(allSongs.filter(e => e.type === "reg")[0].updated_date).format("YYYY-MM-DD")}</span>
+            <Button value={"reg"} onClick={openTable} label={"Normie Music"} length={filteredSplitSongs.reg.length} />
+          </>
         }
         {showTable.reg && filteredSplitSongs.reg.length !== 0 &&
           <Table sortTable={sortTable} upDown={sortHeader} songs={filteredSplitSongs.reg} openModal={openModal} />
         }
         <br />
 
-        <span className="is-size-6 has-text-white is-italic">Last Updated: {allSongs[0] && moment(allSongs.filter(e => e.type === "indie")[0].updated_date).format("YYYY-MM-DD")}</span>
         {filteredSplitSongs.indie.length !== 0 &&
-          <Button value={"indie"} onClick={openTable} label={"Indies"} length={filteredSplitSongs.indie.length} />
+          <>
+            <span className="is-size-6 has-text-white is-italic">Last Updated: {allSongs[0] && moment(allSongs.filter(e => e.type === "indie")[0].updated_date).format("YYYY-MM-DD")}</span>
+            <Button value={"indie"} onClick={openTable} label={"Indies"} length={filteredSplitSongs.indie.length} />
+          </>
         }
         {showTable.indie && filteredSplitSongs.indie.length !== 0 &&
           <Table sortTable={sortTable} upDown={sortHeader} songs={filteredSplitSongs.indie} openModal={openModal} />
         }
         <br />
 
-        <span className="is-size-6 has-text-white is-italic">Last Updated: {allSongs[0] && moment(allSongs.filter(e => e.type === "tv")[0].updated_date).format("YYYY-MM-DD")}</span>
         {filteredSplitSongs.tv.length !== 0 &&
-          <Button value={"tv"} onClick={openTable} label={"TV / Cartoon Shows"} length={filteredSplitSongs.tv.length} />
+          <>
+            <span className="is-size-6 has-text-white is-italic">Last Updated: {allSongs[0] && moment(allSongs.filter(e => e.type === "tv")[0].updated_date).format("YYYY-MM-DD")}</span>
+            <Button value={"tv"} onClick={openTable} label={"TV / Cartoon Shows"} length={filteredSplitSongs.tv.length} />
+          </>
         }
         {showTable.tv && filteredSplitSongs.tv.length !== 0 &&
           <Table sortTable={sortTable} upDown={sortHeader} songs={filteredSplitSongs.tv} openModal={openModal} />
