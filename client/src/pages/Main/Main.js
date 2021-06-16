@@ -112,33 +112,37 @@ function Main() {
   }, []);
 
   function openTable(event) {
+    let category = event.currentTarget.value;
 
-    switch (event.currentTarget.value) {
-      case "pony":
-        if (showTable.pony === false) setShowTable({ ...showTable, pony: true });
-        else setShowTable({ ...showTable, pony: false });
-        break;
-      case "anime":
-        if (showTable.anime === false) setShowTable({ ...showTable, anime: true });
-        else setShowTable({ ...showTable, anime: false });
-        break;
-      case "reg":
-        if (showTable.reg === false) setShowTable({ ...showTable, reg: true });
-        else setShowTable({ ...showTable, reg: false });
-        break;
-      case "indie":
-        if (showTable.indie === false) setShowTable({ ...showTable, indie: true });
-        else setShowTable({ ...showTable, indie: false });
-        break;
-      case "vg":
-        if (showTable.vg === false) setShowTable({ ...showTable, vg: true });
-        else setShowTable({ ...showTable, vg: false });
-        break;
-      case "tv":
-        if (showTable.tv === false) setShowTable({ ...showTable, tv: true });
-        else setShowTable({ ...showTable, tv: false });
-        break;
-    }
+    if (showTable[category] === false) setShowTable({ ...showTable, [category]: true });
+    else setShowTable({ ...showTable, [category]: false });
+
+    // switch (category) {
+    //   case "pony":
+    //     if (showTable.pony === false) setShowTable({ ...showTable, pony: true });
+    //     else setShowTable({ ...showTable, pony: false });
+    //     break;
+    //   case "anime":
+    //     if (showTable.anime === false) setShowTable({ ...showTable, anime: true });
+    //     else setShowTable({ ...showTable, anime: false });
+    //     break;
+    //   case "reg":
+    //     if (showTable.reg === false) setShowTable({ ...showTable, reg: true });
+    //     else setShowTable({ ...showTable, reg: false });
+    //     break;
+    //   case "indie":
+    //     if (showTable.indie === false) setShowTable({ ...showTable, indie: true });
+    //     else setShowTable({ ...showTable, indie: false });
+    //     break;
+    //   case "vg":
+    //     if (showTable.vg === false) setShowTable({ ...showTable, vg: true });
+    //     else setShowTable({ ...showTable, vg: false });
+    //     break;
+    //   case "tv":
+    //     if (showTable.tv === false) setShowTable({ ...showTable, tv: true });
+    //     else setShowTable({ ...showTable, tv: false });
+    //     break;
+    // }
   }
 
   function searchSong(event) {
@@ -543,7 +547,7 @@ function Main() {
         >
         </input>
 
-        <span className="is-size-6 has-text-white is-italic">Last Updated: {splitSongs.pony[0] && moment(splitSongs.pony[0].updated_date).format("YYYY-MM-DD")}</span>
+        <span className="is-size-6 has-text-white is-italic">Last Updated: {allSongs[0] && moment(allSongs.filter(e => e.type === "pony")[0].updated_date).format("YYYY-MM-DD")}</span>
         {filteredSplitSongs.pony.length !== 0 &&
           <Button value={"pony"} onClick={openTable} label={"Pony Songs"} length={filteredSplitSongs.pony.length} />
         }
@@ -552,7 +556,7 @@ function Main() {
         }
         <br />
 
-        <span className="is-size-6 has-text-white is-italic">Last Updated: {splitSongs.anime[0] && moment(splitSongs.anime[0].updated_date).format("YYYY-MM-DD")}</span>
+        <span className="is-size-6 has-text-white is-italic">Last Updated: {allSongs[0] && moment(allSongs.filter(e => e.type === "anime")[0].updated_date).format("YYYY-MM-DD")}</span>
         {filteredSplitSongs.anime.length !== 0 &&
           <Button value={"anime"} onClick={openTable} label={"Anime / Japanese Songs"} length={filteredSplitSongs.anime.length} />
         }
@@ -561,7 +565,7 @@ function Main() {
         }
         <br />
 
-        <span className="is-size-6 has-text-white is-italic">Last Updated: {splitSongs.vg[0] && moment(splitSongs.vg[0].updated_date).format("YYYY-MM-DD")}</span>
+        <span className="is-size-6 has-text-white is-italic">Last Updated: {allSongs[0] && moment(allSongs.filter(e => e.type === "vg")[0].updated_date).format("YYYY-MM-DD")}</span>
         {filteredSplitSongs.vg.length !== 0 &&
           <Button value={"vg"} onClick={openTable} label={"Video Game Music"} length={filteredSplitSongs.vg.length} />
         }
@@ -570,7 +574,7 @@ function Main() {
         }
         <br />
 
-        <span className="is-size-6 has-text-white is-italic">Last Updated: {splitSongs.reg[0] && moment(splitSongs.reg[0].updated_date).format("YYYY-MM-DD")}</span>
+        <span className="is-size-6 has-text-white is-italic">Last Updated: {allSongs[0] && moment(allSongs.filter(e => e.type === "reg")[0].updated_date).format("YYYY-MM-DD")}</span>
         {filteredSplitSongs.reg.length !== 0 &&
           <Button value={"reg"} onClick={openTable} label={"Normie Music"} length={filteredSplitSongs.reg.length} />
         }
@@ -579,7 +583,7 @@ function Main() {
         }
         <br />
 
-        <span className="is-size-6 has-text-white is-italic">Last Updated: {splitSongs.indie[0] && moment(splitSongs.indie[0].updated_date).format("YYYY-MM-DD")}</span>
+        <span className="is-size-6 has-text-white is-italic">Last Updated: {allSongs[0] && moment(allSongs.filter(e => e.type === "indie")[0].updated_date).format("YYYY-MM-DD")}</span>
         {filteredSplitSongs.indie.length !== 0 &&
           <Button value={"indie"} onClick={openTable} label={"Indies"} length={filteredSplitSongs.indie.length} />
         }
@@ -588,7 +592,7 @@ function Main() {
         }
         <br />
 
-        <span className="is-size-6 has-text-white is-italic">Last Updated: {splitSongs.tv[0] && moment(splitSongs.indie[0].updated_date).format("YYYY-MM-DD")}</span>
+        <span className="is-size-6 has-text-white is-italic">Last Updated: {allSongs[0] && moment(allSongs.filter(e => e.type === "tv")[0].updated_date).format("YYYY-MM-DD")}</span>
         {filteredSplitSongs.tv.length !== 0 &&
           <Button value={"tv"} onClick={openTable} label={"TV / Cartoon Shows"} length={filteredSplitSongs.tv.length} />
         }
