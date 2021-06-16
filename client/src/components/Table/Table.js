@@ -7,7 +7,7 @@ import "./index.css";
 function Table(props) {
   const [isDesktop, setDesktop] = useState(window.innerWidth > 992);
   const [isMobile, setMobile] = useState(window.innerWidth < 768);
-  const updateMedia = () => { 
+  const updateMedia = () => {
     setDesktop(window.innerWidth > 992);
     setMobile(window.innerWidth < 768);
   };
@@ -46,11 +46,13 @@ function Table(props) {
             </span>
           </th>
           {isDesktop &&
-            <th className="date col_5" scope="col">Release Date</th>
+            <>
+              <th className="date col_5" scope="col">Release Date</th>
+              <th scope="col" className="col_6">Multitrack</th>
+            </>
           }
           {!isMobile &&
             <>
-              <th scope="col" className="col_6">Multitrack</th>
               <th scope="col">G</th>
               <th scope="col">B</th>
               <th scope="col">D</th>

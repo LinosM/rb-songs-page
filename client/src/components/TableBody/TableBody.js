@@ -22,11 +22,13 @@ function TableBody(props) {
       <td><a href={props.song.download} target="_blank">{props.song.song_name}</a></td>
       <td>{props.song.source ? props.song.source : ""}</td>
       {isDesktop &&
-        <td className="date">{moment(props.song.release_date).format("YYYY-MM-DD")}</td>
+        <>
+          <td className="date">{moment(props.song.release_date).format("YYYY-MM-DD")}</td>
+          <td>{props.song.multitrack}</td>
+        </>
       }
       {!isMobile &&
         <>
-          <td>{props.song.multitrack}</td>
           <td>{props.song.g}</td>
           <td>{props.song.b}</td>
           <td>{props.song.d}</td>
