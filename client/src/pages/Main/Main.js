@@ -117,33 +117,6 @@ function Main() {
 
     if (showTable[category] === false) setShowTable({ ...showTable, [category]: true });
     else setShowTable({ ...showTable, [category]: false });
-
-    // switch (category) {
-    //   case "pony":
-    //     if (showTable.pony === false) setShowTable({ ...showTable, pony: true });
-    //     else setShowTable({ ...showTable, pony: false });
-    //     break;
-    //   case "anime":
-    //     if (showTable.anime === false) setShowTable({ ...showTable, anime: true });
-    //     else setShowTable({ ...showTable, anime: false });
-    //     break;
-    //   case "reg":
-    //     if (showTable.reg === false) setShowTable({ ...showTable, reg: true });
-    //     else setShowTable({ ...showTable, reg: false });
-    //     break;
-    //   case "indie":
-    //     if (showTable.indie === false) setShowTable({ ...showTable, indie: true });
-    //     else setShowTable({ ...showTable, indie: false });
-    //     break;
-    //   case "vg":
-    //     if (showTable.vg === false) setShowTable({ ...showTable, vg: true });
-    //     else setShowTable({ ...showTable, vg: false });
-    //     break;
-    //   case "tv":
-    //     if (showTable.tv === false) setShowTable({ ...showTable, tv: true });
-    //     else setShowTable({ ...showTable, tv: false });
-    //     break;
-    // }
   }
 
   // Runs a real time search of a song in every category, filteredSplitSongs object is updated after every result update
@@ -162,53 +135,6 @@ function Main() {
       object[array] = searchedSongs;
     }
     setFilteredSplitSongs(object);
-
-    // const filteredPony = splitSongs.pony.filter(song => {
-    //   let values = filterValues(song);
-    //   if (values.indexOf(filter.toLowerCase()) !== -1) {
-    //     return song
-    //   };
-    // })
-    // const filteredAnime = splitSongs.anime.filter(song => {
-    //   let values = filterValues(song);
-    //   if (values.indexOf(filter.toLowerCase()) !== -1) {
-    //     return song
-    //   };
-    // })
-    // const filteredReg = splitSongs.reg.filter(song => {
-    //   let values = filterValues(song);
-    //   if (values.indexOf(filter.toLowerCase()) !== -1) {
-    //     return song
-    //   };
-    // })
-    // const filteredTv = splitSongs.tv.filter(song => {
-    //   let values = filterValues(song);
-    //   if (values.indexOf(filter.toLowerCase()) !== -1) {
-    //     return song
-    //   };
-    // })
-    // const filteredIndie = splitSongs.indie.filter(song => {
-    //   let values = filterValues(song);
-    //   if (values.indexOf(filter.toLowerCase()) !== -1) {
-    //     return song
-    //   };
-    // })
-    // const filteredVg = splitSongs.vg.filter(song => {
-    //   let values = filterValues(song);
-    //   if (values.indexOf(filter.toLowerCase()) !== -1) {
-    //     return song
-    //   };
-    // })
-
-    // setFilteredSplitSongs({
-    //   ...filteredSplitSongs,
-    //   pony: filteredPony,
-    //   anime: filteredAnime,
-    //   reg: filteredReg,
-    //   indie: filteredIndie,
-    //   vg: filteredVg,
-    //   tv: filteredTv
-    // });
   }
 
   // Combines all the song's metadata into one string to search through
@@ -225,79 +151,26 @@ function Main() {
     return string;
   }
 
+  // Clicking the header of a table sorts that category for that table
   function sortTable(event) {
-    let sortArray = {
-      pony: [],
-      anime: [],
-      reg: [],
-      indie: [],
-      vg: [],
-      tv: [],
-      lastTen: []
-    };
+    let sortArray = {};
 
     // updated, artist, song, or source
     let sortType = event.target.getAttribute("value");
 
-    // TODO: Run these in a proper loop silly
+    // pony, anime, reg, indie, vg, tv, or lastTen
+    let category = event.target.getAttribute("category");
+
     switch (sortType) {
       case "artist":
         if (sortHeader.artist) {
-          sortArray.pony = filteredSplitSongs.pony.sort((a, b) => {
-            const nameA = a.artist.toLowerCase(), nameB = b.artist.toLowerCase();
-            return sortByName(nameA, nameB, sortHeader.artist)
-          })
-          sortArray.anime = filteredSplitSongs.anime.sort((a, b) => {
-            const nameA = a.artist.toLowerCase(), nameB = b.artist.toLowerCase();
-            return sortByName(nameA, nameB, sortHeader.artist)
-          })
-          sortArray.reg = filteredSplitSongs.reg.sort((a, b) => {
-            const nameA = a.artist.toLowerCase(), nameB = b.artist.toLowerCase();
-            return sortByName(nameA, nameB, sortHeader.artist)
-          })
-          sortArray.indie = filteredSplitSongs.indie.sort((a, b) => {
-            const nameA = a.artist.toLowerCase(), nameB = b.artist.toLowerCase();
-            return sortByName(nameA, nameB, sortHeader.artist)
-          })
-          sortArray.vg = filteredSplitSongs.vg.sort((a, b) => {
-            const nameA = a.artist.toLowerCase(), nameB = b.artist.toLowerCase();
-            return sortByName(nameA, nameB, sortHeader.artist)
-          })
-          sortArray.tv = filteredSplitSongs.tv.sort((a, b) => {
-            const nameA = a.artist.toLowerCase(), nameB = b.artist.toLowerCase();
-            return sortByName(nameA, nameB, sortHeader.artist)
-          })
-          sortArray.lastTen = filteredSplitSongs.lastTen.sort((a, b) => {
+          sortArray[category] = filteredSplitSongs[category].sort((a, b) => {
             const nameA = a.artist.toLowerCase(), nameB = b.artist.toLowerCase();
             return sortByName(nameA, nameB, sortHeader.artist)
           })
           setSortHeader({ ...sortHeader, artist: false })
         } else {
-          sortArray.pony = filteredSplitSongs.pony.sort((a, b) => {
-            const nameA = a.artist.toLowerCase(), nameB = b.artist.toLowerCase();
-            return sortByName(nameA, nameB, sortHeader.artist)
-          })
-          sortArray.anime = filteredSplitSongs.anime.sort((a, b) => {
-            const nameA = a.artist.toLowerCase(), nameB = b.artist.toLowerCase();
-            return sortByName(nameA, nameB, sortHeader.artist)
-          })
-          sortArray.reg = filteredSplitSongs.reg.sort((a, b) => {
-            const nameA = a.artist.toLowerCase(), nameB = b.artist.toLowerCase();
-            return sortByName(nameA, nameB, sortHeader.artist)
-          })
-          sortArray.indie = filteredSplitSongs.indie.sort((a, b) => {
-            const nameA = a.artist.toLowerCase(), nameB = b.artist.toLowerCase();
-            return sortByName(nameA, nameB, sortHeader.artist)
-          })
-          sortArray.vg = filteredSplitSongs.vg.sort((a, b) => {
-            const nameA = a.artist.toLowerCase(), nameB = b.artist.toLowerCase();
-            return sortByName(nameA, nameB, sortHeader.artist)
-          })
-          sortArray.tv = filteredSplitSongs.tv.sort((a, b) => {
-            const nameA = a.artist.toLowerCase(), nameB = b.artist.toLowerCase();
-            return sortByName(nameA, nameB, sortHeader.artist)
-          })
-          sortArray.lastTen = filteredSplitSongs.lastTen.sort((a, b) => {
+          sortArray[category] = filteredSplitSongs[category].sort((a, b) => {
             const nameA = a.artist.toLowerCase(), nameB = b.artist.toLowerCase();
             return sortByName(nameA, nameB, sortHeader.artist)
           })
@@ -306,61 +179,13 @@ function Main() {
         break;
       case "song":
         if (sortHeader.song) {
-          sortArray.pony = filteredSplitSongs.pony.sort((a, b) => {
-            const nameA = a.song_name.toLowerCase(), nameB = b.song_name.toLowerCase();
-            return sortByName(nameA, nameB, sortHeader.song)
-          })
-          sortArray.anime = filteredSplitSongs.anime.sort((a, b) => {
-            const nameA = a.song_name.toLowerCase(), nameB = b.song_name.toLowerCase();
-            return sortByName(nameA, nameB, sortHeader.song)
-          })
-          sortArray.reg = filteredSplitSongs.reg.sort((a, b) => {
-            const nameA = a.song_name.toLowerCase(), nameB = b.song_name.toLowerCase();
-            return sortByName(nameA, nameB, sortHeader.song)
-          })
-          sortArray.indie = filteredSplitSongs.indie.sort((a, b) => {
-            const nameA = a.song_name.toLowerCase(), nameB = b.song_name.toLowerCase();
-            return sortByName(nameA, nameB, sortHeader.song)
-          })
-          sortArray.vg = filteredSplitSongs.vg.sort((a, b) => {
-            const nameA = a.song_name.toLowerCase(), nameB = b.song_name.toLowerCase();
-            return sortByName(nameA, nameB, sortHeader.song)
-          })
-          sortArray.tv = filteredSplitSongs.tv.sort((a, b) => {
-            const nameA = a.song_name.toLowerCase(), nameB = b.song_name.toLowerCase();
-            return sortByName(nameA, nameB, sortHeader.song)
-          })
-          sortArray.lastTen = filteredSplitSongs.lastTen.sort((a, b) => {
+          sortArray[category] = filteredSplitSongs[category].sort((a, b) => {
             const nameA = a.song_name.toLowerCase(), nameB = b.song_name.toLowerCase();
             return sortByName(nameA, nameB, sortHeader.song)
           })
           setSortHeader({ ...sortHeader, song: false })
         } else {
-          sortArray.pony = filteredSplitSongs.pony.sort((a, b) => {
-            const nameA = a.song_name.toLowerCase(), nameB = b.song_name.toLowerCase();
-            return sortByName(nameA, nameB, sortHeader.song)
-          })
-          sortArray.anime = filteredSplitSongs.anime.sort((a, b) => {
-            const nameA = a.song_name.toLowerCase(), nameB = b.song_name.toLowerCase();
-            return sortByName(nameA, nameB, sortHeader.song)
-          })
-          sortArray.reg = filteredSplitSongs.reg.sort((a, b) => {
-            const nameA = a.song_name.toLowerCase(), nameB = b.song_name.toLowerCase();
-            return sortByName(nameA, nameB, sortHeader.song)
-          })
-          sortArray.indie = filteredSplitSongs.indie.sort((a, b) => {
-            const nameA = a.song_name.toLowerCase(), nameB = b.song_name.toLowerCase();
-            return sortByName(nameA, nameB, sortHeader.song)
-          })
-          sortArray.vg = filteredSplitSongs.vg.sort((a, b) => {
-            const nameA = a.song_name.toLowerCase(), nameB = b.song_name.toLowerCase();
-            return sortByName(nameA, nameB, sortHeader.song)
-          })
-          sortArray.tv = filteredSplitSongs.tv.sort((a, b) => {
-            const nameA = a.song_name.toLowerCase(), nameB = b.song_name.toLowerCase();
-            return sortByName(nameA, nameB, sortHeader.song)
-          })
-          sortArray.lastTen = filteredSplitSongs.lastTen.sort((a, b) => {
+          sortArray[category] = filteredSplitSongs[category].sort((a, b) => {
             const nameA = a.song_name.toLowerCase(), nameB = b.song_name.toLowerCase();
             return sortByName(nameA, nameB, sortHeader.song)
           })
@@ -369,61 +194,13 @@ function Main() {
         break;
       case "source":
         if (sortHeader.source) {
-          sortArray.pony = filteredSplitSongs.pony.sort((a, b) => {
-            const nameA = a.source.toLowerCase(), nameB = b.source.toLowerCase();
-            return sortByName(nameA, nameB, sortHeader.source)
-          })
-          sortArray.anime = filteredSplitSongs.anime.sort((a, b) => {
-            const nameA = a.source.toLowerCase(), nameB = b.source.toLowerCase();
-            return sortByName(nameA, nameB, sortHeader.source)
-          })
-          sortArray.reg = filteredSplitSongs.reg.sort((a, b) => {
-            const nameA = a.source.toLowerCase(), nameB = b.source.toLowerCase();
-            return sortByName(nameA, nameB, sortHeader.source)
-          })
-          sortArray.indie = filteredSplitSongs.indie.sort((a, b) => {
-            const nameA = a.source.toLowerCase(), nameB = b.source.toLowerCase();
-            return sortByName(nameA, nameB, sortHeader.source)
-          })
-          sortArray.vg = filteredSplitSongs.vg.sort((a, b) => {
-            const nameA = a.source.toLowerCase(), nameB = b.source.toLowerCase();
-            return sortByName(nameA, nameB, sortHeader.source)
-          })
-          sortArray.tv = filteredSplitSongs.tv.sort((a, b) => {
-            const nameA = a.source.toLowerCase(), nameB = b.source.toLowerCase();
-            return sortByName(nameA, nameB, sortHeader.source)
-          })
-          sortArray.lastTen = filteredSplitSongs.lastTen.sort((a, b) => {
+          sortArray[category] = filteredSplitSongs[category].sort((a, b) => {
             const nameA = a.source.toLowerCase(), nameB = b.source.toLowerCase();
             return sortByName(nameA, nameB, sortHeader.source)
           })
           setSortHeader({ ...sortHeader, source: false })
         } else {
-          sortArray.pony = filteredSplitSongs.pony.sort((a, b) => {
-            const nameA = a.source.toLowerCase(), nameB = b.source.toLowerCase();
-            return sortByName(nameA, nameB, sortHeader.source)
-          })
-          sortArray.anime = filteredSplitSongs.anime.sort((a, b) => {
-            const nameA = a.source.toLowerCase(), nameB = b.source.toLowerCase();
-            return sortByName(nameA, nameB, sortHeader.source)
-          })
-          sortArray.reg = filteredSplitSongs.reg.sort((a, b) => {
-            const nameA = a.source.toLowerCase(), nameB = b.source.toLowerCase();
-            return sortByName(nameA, nameB, sortHeader.source)
-          })
-          sortArray.indie = filteredSplitSongs.indie.sort((a, b) => {
-            const nameA = a.source.toLowerCase(), nameB = b.source.toLowerCase();
-            return sortByName(nameA, nameB, sortHeader.source)
-          })
-          sortArray.vg = filteredSplitSongs.vg.sort((a, b) => {
-            const nameA = a.source.toLowerCase(), nameB = b.source.toLowerCase();
-            return sortByName(nameA, nameB, sortHeader.source)
-          })
-          sortArray.tv = filteredSplitSongs.tv.sort((a, b) => {
-            const nameA = a.source.toLowerCase(), nameB = b.source.toLowerCase();
-            return sortByName(nameA, nameB, sortHeader.source)
-          })
-          sortArray.lastTen = filteredSplitSongs.lastTen.sort((a, b) => {
+          sortArray[category] = filteredSplitSongs[category].sort((a, b) => {
             const nameA = a.source.toLowerCase(), nameB = b.source.toLowerCase();
             return sortByName(nameA, nameB, sortHeader.source)
           })
@@ -432,61 +209,13 @@ function Main() {
         break;
       case "updated":
         if (sortHeader.updated) {
-          sortArray.pony = filteredSplitSongs.pony.sort((a, b) => {
-            const nameA = a.updated_date, nameB = b.updated_date;
-            return sortByDate(nameA, nameB, sortHeader.updated)
-          })
-          sortArray.anime = filteredSplitSongs.anime.sort((a, b) => {
-            const nameA = a.updated_date, nameB = b.updated_date;
-            return sortByDate(nameA, nameB, sortHeader.updated)
-          })
-          sortArray.reg = filteredSplitSongs.reg.sort((a, b) => {
-            const nameA = a.updated_date, nameB = b.updated_date;
-            return sortByDate(nameA, nameB, sortHeader.updated)
-          })
-          sortArray.indie = filteredSplitSongs.indie.sort((a, b) => {
-            const nameA = a.updated_date, nameB = b.updated_date;
-            return sortByDate(nameA, nameB, sortHeader.updated)
-          })
-          sortArray.vg = filteredSplitSongs.vg.sort((a, b) => {
-            const nameA = a.updated_date, nameB = b.updated_date;
-            return sortByDate(nameA, nameB, sortHeader.updated)
-          })
-          sortArray.tv = filteredSplitSongs.tv.sort((a, b) => {
-            const nameA = a.updated_date, nameB = b.updated_date;
-            return sortByDate(nameA, nameB, sortHeader.updated)
-          })
-          sortArray.lastTen = filteredSplitSongs.lastTen.sort((a, b) => {
+          sortArray[category] = filteredSplitSongs[category].sort((a, b) => {
             const nameA = a.updated_date, nameB = b.updated_date;
             return sortByDate(nameA, nameB, sortHeader.updated)
           })
           setSortHeader({ ...sortHeader, updated: false })
         } else {
-          sortArray.pony = filteredSplitSongs.pony.sort((a, b) => {
-            const nameA = a.updated_date, nameB = b.updated_date;
-            return sortByDate(nameA, nameB, sortHeader.updated)
-          })
-          sortArray.anime = filteredSplitSongs.anime.sort((a, b) => {
-            const nameA = a.updated_date, nameB = b.updated_date;
-            return sortByDate(nameA, nameB, sortHeader.updated)
-          })
-          sortArray.reg = filteredSplitSongs.reg.sort((a, b) => {
-            const nameA = a.updated_date, nameB = b.updated_date;
-            return sortByDate(nameA, nameB, sortHeader.updated)
-          })
-          sortArray.indie = filteredSplitSongs.indie.sort((a, b) => {
-            const nameA = a.updated_date, nameB = b.updated_date;
-            return sortByDate(nameA, nameB, sortHeader.updated)
-          })
-          sortArray.vg = filteredSplitSongs.vg.sort((a, b) => {
-            const nameA = a.updated_date, nameB = b.updated_date;
-            return sortByDate(nameA, nameB, sortHeader.updated)
-          })
-          sortArray.tv = filteredSplitSongs.tv.sort((a, b) => {
-            const nameA = a.updated_date, nameB = b.updated_date;
-            return sortByDate(nameA, nameB, sortHeader.updated)
-          })
-          sortArray.lastTen = filteredSplitSongs.lastTen.sort((a, b) => {
+          sortArray[category] = filteredSplitSongs[category].sort((a, b) => {
             const nameA = a.updated_date, nameB = b.updated_date;
             return sortByDate(nameA, nameB, sortHeader.updated)
           })
@@ -499,6 +228,13 @@ function Main() {
 
   // Sorting function, "type" variable is either artist, song, or source
   function sortByName(nameA, nameB, type) {
+    // Allows the sorting to ignore the word "The" and the letter "A" if it's at the beginning of the name
+    if (nameA.substring(0,4) === "the ") nameA = nameA.substring(4,nameA.length);
+    if (nameB.substring(0,4) === "the ") nameB = nameB.substring(4,nameB.length);
+
+    if (nameA.substring(0,2) === "a ") nameA = nameA.substring(2,nameA.length);
+    if (nameB.substring(0,2) === "a ") nameB = nameB.substring(2,nameB.length);
+
     if (type) {
       if (nameA < nameB) return -1
       if (nameA > nameB) return 1
@@ -579,7 +315,7 @@ function Main() {
           </>
         }
         {showTable.pony && filteredSplitSongs.pony.length !== 0 &&
-          <Table sortTable={sortTable} upDown={sortHeader} songs={filteredSplitSongs.pony} openModal={openModal} />
+          <Table sortTable={sortTable} category="pony" upDown={sortHeader} songs={filteredSplitSongs.pony} openModal={openModal} />
         }
         <br />
 
@@ -590,7 +326,7 @@ function Main() {
           </>
         }
         {showTable.anime && filteredSplitSongs.anime.length !== 0 &&
-          <Table sortTable={sortTable} upDown={sortHeader} songs={filteredSplitSongs.anime} openModal={openModal} />
+          <Table sortTable={sortTable} category="anime" upDown={sortHeader} songs={filteredSplitSongs.anime} openModal={openModal} />
         }
         <br />
 
@@ -601,7 +337,7 @@ function Main() {
           </>
         }
         {showTable.vg && filteredSplitSongs.vg.length !== 0 &&
-          <Table sortTable={sortTable} upDown={sortHeader} songs={filteredSplitSongs.vg} openModal={openModal} />
+          <Table sortTable={sortTable} category="vg" upDown={sortHeader} songs={filteredSplitSongs.vg} openModal={openModal} />
         }
         <br />
 
@@ -613,7 +349,7 @@ function Main() {
           </>
         }
         {showTable.reg && filteredSplitSongs.reg.length !== 0 &&
-          <Table sortTable={sortTable} upDown={sortHeader} songs={filteredSplitSongs.reg} openModal={openModal} />
+          <Table sortTable={sortTable} category="reg" upDown={sortHeader} songs={filteredSplitSongs.reg} openModal={openModal} />
         }
         <br />
 
@@ -624,7 +360,7 @@ function Main() {
           </>
         }
         {showTable.indie && filteredSplitSongs.indie.length !== 0 &&
-          <Table sortTable={sortTable} upDown={sortHeader} songs={filteredSplitSongs.indie} openModal={openModal} />
+          <Table sortTable={sortTable} category="indie" upDown={sortHeader} songs={filteredSplitSongs.indie} openModal={openModal} />
         }
         <br />
 
@@ -635,14 +371,14 @@ function Main() {
           </>
         }
         {showTable.tv && filteredSplitSongs.tv.length !== 0 &&
-          <Table sortTable={sortTable} upDown={sortHeader} songs={filteredSplitSongs.tv} openModal={openModal} />
+          <Table sortTable={sortTable} category="tv" upDown={sortHeader} songs={filteredSplitSongs.tv} openModal={openModal} />
         }
 
         <div className="mt-5">
           <div className="is-size-2 has-text-centered has-text-light">Last 10 Releases</div>
           <div className="is-size-6 has-text-centered has-text-white is-italic">Last Updated: {allSongs[0] && moment(allSongs[0].updated_date).format("YYYY-MM-DD")}</div>
           <hr />
-          <Table sortTable={sortTable} upDown={sortHeader} songs={splitSongs.lastTen} openModal={openModal} />
+          <Table sortTable={sortTable} category="lastTen" upDown={sortHeader} songs={splitSongs.lastTen} openModal={openModal} />
         </div>
 
       </div>

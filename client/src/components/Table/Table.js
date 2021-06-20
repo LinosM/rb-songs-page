@@ -21,28 +21,28 @@ function Table(props) {
     <table className="table is-narrow is-hoverable">
       <thead>
         <tr>
-          <th className="date clickable col_1" scope="col" value="updated" onClick={props.sortTable}>
+          <th className="date clickable col_1" scope="col" category={props.category} value="updated" onClick={props.sortTable}>
             Updated
             <span className="ml-1">
-              <FontAwesomeIcon value="updated" onClick={props.sortTable} icon={props.upDown.updated ? faSortNumericUpAlt : faSortNumericDownAlt} />
+              <FontAwesomeIcon value="updated" category={props.category} onClick={props.sortTable} icon={props.upDown.updated ? faSortNumericUpAlt : faSortNumericDownAlt} />
             </span>
           </th>
-          <th scope="col" className="clickable col_2" value="artist" onClick={props.sortTable}>
+          <th scope="col" className="clickable col_2" category={props.category} value="artist" onClick={props.sortTable}>
             Artist
             <span className="ml-1">
-              <FontAwesomeIcon value="artist" onClick={props.sortTable} icon={props.upDown.artist ? faSortAlphaUp : faSortAlphaDown} />
+              <FontAwesomeIcon value="artist" category={props.category} onClick={props.sortTable} icon={props.upDown.artist ? faSortAlphaUp : faSortAlphaDown} />
             </span>
           </th>
-          <th scope="col col_3" className="clickable" value="song" onClick={props.sortTable}>
+          <th scope="col col_3" className="clickable" category={props.category} value="song" onClick={props.sortTable}>
             Song
             <span className="ml-1">
-              <FontAwesomeIcon value="song" onClick={props.sortTable} icon={props.upDown.song ? faSortAlphaUp : faSortAlphaDown} />
+              <FontAwesomeIcon value="song" category={props.category} onClick={props.sortTable} icon={props.upDown.song ? faSortAlphaUp : faSortAlphaDown} />
             </span>
           </th>
-          <th scope="col col_4" className="clickable" value="source" onClick={props.sortTable}>
+          <th scope="col col_4" className="clickable" category={props.category} value="source" onClick={props.sortTable}>
             Source
             <span className="ml-1">
-              <FontAwesomeIcon value="source" onClick={props.sortTable} icon={props.upDown.source ? faSortAlphaUp : faSortAlphaDown} />
+              <FontAwesomeIcon value="source" category={props.category} onClick={props.sortTable} icon={props.upDown.source ? faSortAlphaUp : faSortAlphaDown} />
             </span>
           </th>
           {isDesktop &&
