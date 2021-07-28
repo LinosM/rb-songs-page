@@ -5,6 +5,7 @@ import API from "../../utils/API";
 import moment from "moment";
 import "./index.css";
 import Modal from "react-modal";
+import Filters from "../../components/Filters";
 
 const customStyles = {
   content: {
@@ -56,6 +57,7 @@ function Main() {
     lastTen: []
   });
   const [modalIsOpen, setIsOpen] = useState(false);
+  const [filterBox, setFilterBox] = useState(false);
   const [videoInfo, setVideoInfo] = useState({
     id: "",
     song: "",
@@ -229,11 +231,11 @@ function Main() {
   // Sorting function, "type" variable is either artist, song, or source
   function sortByName(nameA, nameB, type) {
     // Allows the sorting to ignore the word "The" and the letter "A" if it's at the beginning of the name
-    if (nameA.substring(0,4) === "the ") nameA = nameA.substring(4,nameA.length);
-    if (nameB.substring(0,4) === "the ") nameB = nameB.substring(4,nameB.length);
+    if (nameA.substring(0, 4) === "the ") nameA = nameA.substring(4, nameA.length);
+    if (nameB.substring(0, 4) === "the ") nameB = nameB.substring(4, nameB.length);
 
-    if (nameA.substring(0,2) === "a ") nameA = nameA.substring(2,nameA.length);
-    if (nameB.substring(0,2) === "a ") nameB = nameB.substring(2,nameB.length);
+    if (nameA.substring(0, 2) === "a ") nameA = nameA.substring(2, nameA.length);
+    if (nameB.substring(0, 2) === "a ") nameB = nameB.substring(2, nameB.length);
 
     if (type) {
       if (nameA < nameB) return -1
@@ -299,14 +301,20 @@ function Main() {
         <div className="has-text-centered title is-2 has-text-light pt-5">Linos' Rock Band Charts</div>
         <div className="has-text-centered title is-4 has-text-light">Number of songs: {allSongs.length}</div>
 
-        <input
-          type="text"
-          className="input is-info mb-5"
-          placeholder="Search for songs.."
-          onChange={searchSong}
-        >
-        </input>
-
+        <div className="columns">
+          <div className="column is-10">
+            <input
+              type="text"
+              className="input is-info mb-5"
+              placeholder="Search for songs.."
+              onChange={searchSong}
+            >
+            </input>
+          </div>
+          <div className="column">
+            <Filters />
+          </div>
+        </div>
 
         {filteredSplitSongs.pony.length !== 0 &&
           <>
