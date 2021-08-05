@@ -6,8 +6,7 @@ import { faSlidersH } from "@fortawesome/free-solid-svg-icons";
 const Filters = props => (
   <button 
     className="button is-fullwidth"
-    // onClick={props.onClick}
-    // value={props.value}
+    onClick={props.onClick}
   >
     <FontAwesomeIcon className="mr-2" icon={faSlidersH} /> Filters
   </button>

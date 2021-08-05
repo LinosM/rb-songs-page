@@ -63,6 +63,14 @@ function Main() {
     song: "",
     artist: ""
   });
+  const [insFilters, setInsFilters] = useState({
+    guitar: false,
+    bass: false,
+    drums: false,
+    vocals: false,
+    keys: false
+  });
+  const [searchBar, setSearchBar] = useState("");
 
   useEffect(() => {
     API.getSongs()
@@ -113,6 +121,21 @@ function Main() {
       .catch(err => console.log(err))
   }, []);
 
+  // Runs filterInstruments function after user clicks on a filter criteria
+  useEffect(() => {
+    filterInstruments();
+  }, [insFilters]);
+
+  // Runs searchSong function after user types in the search bar
+  useEffect(() => {
+    searchSong();
+  }, [searchBar])
+
+  function openFilters(event) {
+    if (filterBox) setFilterBox(false);
+    else setFilterBox(true);
+  }
+
   // Clicking a button category will reveal it's table of songs
   function openTable(event) {
     let category = event.currentTarget.value;
@@ -121,22 +144,95 @@ function Main() {
     else setShowTable({ ...showTable, [category]: false });
   }
 
-  // Runs a real time search of a song in every category, filteredSplitSongs object is updated after every result update
-  function searchSong(event) {
-    let filter = event.currentTarget.value;
-    let object = {};
+  /*
+  If the user types anything into the searchbar, search results gets passed to the filterInstruments function
+  If the user checks a box in the filter, the filtered results gets passed to the searchSong function
+  TL;DR: 
+  searchSong --> filterInstruments
+  filterInstruments --> searchSong
+  */
 
-    for (let array in splitSongs) {
-      let searchedSongs = splitSongs[array].filter(song => {
+  // Runs a real time search of a song in every category, filteredSplitSongs object is updated after every result update
+  function searchSong(passedObject) {
+    let object = {};
+    let songs = {};
+
+    // passedObject is the results from the instrument filters
+    if (passedObject) songs = passedObject;
+    else songs = splitSongs;
+
+    for (let array in songs) {
+      let searchedSongs = songs[array].filter(song => {
         let values = filterValues(song);
-        if (values.indexOf(filter.toLowerCase()) !== -1) {
+        if (values.indexOf(searchBar.toLowerCase()) !== -1) {
           return song
         };
       })
 
       object[array] = searchedSongs;
     }
-    setFilteredSplitSongs(object);
+
+    if (passedObject) setFilteredSplitSongs(object);
+    else filterInstruments(object);
+  }
+
+  // Only displays songs that contain the selected instruments from the filter
+  function filterInstruments(passedSearchObject) {
+    let filters = [];
+
+    // Checked instruments from the filter are pushed into the filters array
+    if (insFilters.guitar) filters.push("G");
+    if (insFilters.bass) filters.push("B");
+    if (insFilters.drums) filters.push("D");
+    if (insFilters.vocals) filters.push("V");
+    if (insFilters.keys) filters.push("K");
+
+    // If all filters are unchecked, every song is passed to the search or displayed
+    if (filters.length === 0) {
+      if (passedSearchObject) setFilteredSplitSongs(passedSearchObject);
+      else searchSong(splitSongs);
+    }
+
+    else {
+      let object = {};
+      let songs = {};
+
+      if (passedSearchObject) songs = passedSearchObject;
+      else songs = splitSongs;
+
+      /*
+      Cycles through all instruments checked in the filter, breaks the loop if the current song does not have an instrument from the filter 
+      
+      Example 1 (Passes the test): 
+      User filter: [G, B, D]
+      Song: "GBDVK"
+
+      Example 2 (Fails the test): 
+      User filter: [G, B, K]
+      Song: "GBDV"
+      */
+      for (let array in songs) {
+        let searchedSongs = songs[array].filter(song => {
+          let insString = "";
+          let pass = false;
+          if (song.g === "G") insString += "G";
+          if (song.b === "B") insString += "B";
+          if (song.d === "D") insString += "D";
+          if (song.v === "V") insString += "V";
+          if (song.k === "K") insString += "K";
+          for (let i = 0; i < filters.length; i++) {
+            if (insString.indexOf(filters[i]) === -1) break;
+            if (i === filters.length - 1) pass = true;
+          }
+          if (pass) return song;
+        })
+
+        object[array] = searchedSongs;
+      }
+
+      if (passedSearchObject) setFilteredSplitSongs(object);
+      else searchSong(object);
+    }
   }
 
   // Combines all the song's metadata into one string to search through
@@ -275,6 +371,10 @@ function Main() {
     setIsOpen(false);
   }
 
+  function checked(event) {
+    (insFilters[event.target.value] ? setInsFilters({ ...insFilters, [event.target.value]: false }) : setInsFilters({ ...insFilters, [event.target.value]: true }))
+  }
+
   return (
     <section className="section">
       <Modal
@@ -307,14 +407,51 @@ function Main() {
               type="text"
               className="input is-info mb-5"
               placeholder="Search for songs.."
-              onChange={searchSong}
+              onChange={(e) => { setSearchBar(e.currentTarget.value) }}
             >
             </input>
           </div>
           <div className="column">
-            <Filters />
+            <Filters
+              onClick={openFilters}
+            />
           </div>
         </div>
+
+        {filterBox &&
+          <div className="columns has-text-white">
+            <div className="column is-12">
+              <div className="columns is-size-3">
+                <div className="column has-text-centered">Instruments</div>
+              </div>
+              <div className="columns">
+                <div className="column has-text-centered" style={{ userSelect: "none" }}>
+                  <label className="checkbox mr-2">
+                    <input type="checkbox" className="mr-1" value="guitar" onChange={checked} checked={insFilters.guitar} />
+                    Guitar
+                  </label>
+                  <label className="checkbox mr-2">
+                    <input type="checkbox" className="mr-1" value="bass" onChange={checked} checked={insFilters.bass} />
+                    Bass
+                  </label>
+                  <label className="checkbox mr-2">
+                    <input type="checkbox" className="mr-1" value="drums" onChange={checked} checked={insFilters.drums} />
+                    Drums
+                  </label>
+                  <label className="checkbox mr-2">
+                    <input type="checkbox" className="mr-1" value="keys" onChange={checked} checked={insFilters.keys} />
+                    Keys
+                  </label>
+                  <label className="checkbox mr-2">
+                    <input type="checkbox" className="mr-1" value="vocals" onChange={checked} checked={insFilters.vocals} />
+                    Vocals
+                  </label>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        }
 
         {filteredSplitSongs.pony.length !== 0 &&
           <>
