@@ -29,11 +29,11 @@ function TableBody(props) {
       }
       {!isMobile &&
         <>
-          <td>{props.song.g}</td>
-          <td>{props.song.b}</td>
-          <td>{props.song.d}</td>
-          <td>{props.song.k}</td>
-          <td>{props.song.v}</td>
+          {props.song.g === "G" ? <td>{props.song.g}</td> : <td className="has-background-grey">{props.song.g}</td>}
+          {props.song.b === "B" ? <td>{props.song.b}</td> : <td className="has-background-grey">{props.song.b}</td>}
+          {props.song.d === "D" ? <td>{props.song.d}</td> : <td className="has-background-grey">{props.song.d}</td>}
+          {props.song.k === "K" ? <td>{props.song.k}</td> : <td className="has-background-grey">{props.song.k}</td>}
+          {props.song.v === "V" ? <td>{props.song.v}</td> : <td className="has-background-grey">{props.song.v}</td>}
         </>
       }
       <td value={props.song.video} onClick={props.openModal} name={props.song.song_name} artist={props.song.artist}>
