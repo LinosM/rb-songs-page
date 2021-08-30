@@ -7,3 +7,8 @@
     margin-bottom: 2%;
     width: 100%;
 }
+
+.border {
+    border: 2px solid;
+    border-radius: 25px;
+}
