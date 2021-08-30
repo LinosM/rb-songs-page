@@ -70,6 +70,11 @@ function Main() {
     vocals: false,
     keys: false
   });
+  const [audioFilters, setAudioFilters] = useState({
+    multiYes: false,
+    multiNo: false,
+    multiKar: false
+  });
   const [searchBar, setSearchBar] = useState("");
 
   useEffect(() => {
@@ -124,7 +129,7 @@ function Main() {
   // Runs filterInstruments function after user clicks on a filter criteria
   useEffect(() => {
     filterInstruments();
-  }, [insFilters]);
+  }, [insFilters, audioFilters]);
 
   // Runs searchSong function after user types in the search bar
   useEffect(() => {
@@ -178,7 +183,9 @@ function Main() {
 
   // Only displays songs that contain the selected instruments from the filter
   function filterInstruments(passedSearchObject) {
-    let filters = [];
+    let filters = [];       // Instrument filters
+    let multiFilters = [];  // Audio type filters
+
 
     // Checked instruments from the filter are pushed into the filters array
     if (insFilters.guitar) filters.push("G");
@@ -187,47 +194,80 @@ function Main() {
     if (insFilters.vocals) filters.push("V");
     if (insFilters.keys) filters.push("K");
 
+    if (audioFilters.multiKar) multiFilters.push("Karaoke");
+    if (audioFilters.multiNo) multiFilters.push("No");
+    if (audioFilters.multiYes) multiFilters.push("Yes");
+
     // If all filters are unchecked, every song is passed to the search or displayed
-    if (filters.length === 0) {
+    if (filters.length === 0 && multiFilters.length === 0) {
       if (passedSearchObject) setFilteredSplitSongs(passedSearchObject);
       else searchSong(splitSongs);
     }
 
     else {
-      let object = {};
-      let songs = {};
+      let songs = {};   // First object for the instruments filter to run through
+      let songs2 = {};  // Results of instruments filter is now run through the audio type filter
+      let object = {};  // Final object passed to the table or searchbar
 
       if (passedSearchObject) songs = passedSearchObject;
       else songs = splitSongs;
 
       /*
-      Cycles through all instruments checked in the filter, breaks the loop if the current song does not have an instrument from the filter 
+      For loops the user filter and checks indexOf of current song, breaks the loop if the current song does not have an instrument from the filter 
       
       Example 1 (Passes the test): 
       User filter: [G, B, D]
-      Song: "GBDVK"
+      Song: [G, B, D, K, V]
 
       Example 2 (Fails the test): 
       User filter: [G, B, K]
-      Song: "GBDV"
+      Song: [G, B, D, V]
       */
-      for (let array in songs) {
-        let searchedSongs = songs[array].filter(song => {
-          let insString = "";
-          let pass = false;
-          if (song.g === "G") insString += "G";
-          if (song.b === "B") insString += "B";
-          if (song.d === "D") insString += "D";
-          if (song.v === "V") insString += "V";
-          if (song.k === "K") insString += "K";
-          for (let i = 0; i < filters.length; i++) {
-            if (insString.indexOf(filters[i]) === -1) break;
-            if (i === filters.length - 1) pass = true;
-          }
-          if (pass) return song;
-        })
+      if (filters.length !== 0) {
+        for (let array in songs) {
+          let searchedSongs = songs[array].filter(song => {
+            let songIns = [];
+            let pass = false;
+            if (song.g === "G") songIns.push("G");
+            if (song.b === "B") songIns.push("B");
+            if (song.d === "D") songIns.push("D");
+            if (song.v === "V") songIns.push("V");
+            if (song.k === "K") songIns.push("K");
+            for (let i = 0; i < filters.length; i++) {
+              if (songIns.indexOf(filters[i]) === -1) break;
 
-        object[array] = searchedSongs;
+              // Turns "pass" to true and adds the current song to the object
+              if (i === filters.length - 1) pass = true;
+            }
+            if (pass) return song;
+          })
+
+          songs2[array] = searchedSongs;
+        }
+      }
+      else {
+        songs2 = songs;
+      }
+
+      /*
+      Runs an indexOf of the multiFilters array using the song's multitrack section
+      
+      Example (Fail):
+      multiFilters: ["Yes", "Karaoke"]
+      song.multitracks: "No"
+      */
+      if (multiFilters.length !== 0) {
+        for (let array in songs2) {
+          let searchedSongs = songs2[array].filter(song => {
+            if (multiFilters.indexOf(song.multitrack) !== -1) {
+              return song;
+            }
+          })
+          object[array] = searchedSongs;
+        }
+      }
+      else {
+        object = songs2;
       }
 
       if (passedSearchObject) setFilteredSplitSongs(object);
@@ -375,6 +415,10 @@ function Main() {
     (insFilters[event.target.value] ? setInsFilters({ ...insFilters, [event.target.value]: false }) : setInsFilters({ ...insFilters, [event.target.value]: true }))
   }
 
+  function checkedAudio(event) {
+    (audioFilters[event.target.value] ? setAudioFilters({ ...audioFilters, [event.target.value]: false }) : setAudioFilters({ ...audioFilters, [event.target.value]: true }))
+  }
+
   return (
     <section className="section">
       <Modal
@@ -420,9 +464,10 @@ function Main() {
 
         {filterBox &&
           <div className="columns has-text-white">
-            <div className="column is-12">
-              <div className="columns is-size-3">
-                <div className="column has-text-centered">Instruments</div>
+            <div className="column is-2"></div>
+            <div className="column is-4 border mr-1 mt-2">
+              <div className="columns">
+                <div className="column has-text-centered is-size-3">Instruments</div>
               </div>
               <div className="columns">
                 <div className="column has-text-centered" style={{ userSelect: "none" }}>
@@ -449,7 +494,28 @@ function Main() {
                 </div>
               </div>
             </div>
-
+            <div className="column is-4 border ml-1 mt-2">
+              <div className="columns">
+                <div className="column has-text-centered is-size-3">Audio Type</div>
+              </div>
+              <div className="columns">
+                <div className="column has-text-centered" style={{ userSelect: "none" }}>
+                  <label className="checkbox mr-2">
+                    <input type="checkbox" className="mr-1" value="multiYes" onChange={checkedAudio} checked={audioFilters.multiYes} />
+                    Multitracks
+                  </label>
+                  <label className="checkbox mr-2">
+                    <input type="checkbox" className="mr-1" value="multiNo" onChange={checkedAudio} checked={audioFilters.multiNo} />
+                    Single Audio
+                  </label>
+                  <label className="checkbox mr-2">
+                    <input type="checkbox" className="mr-1" value="multiKar" onChange={checkedAudio} checked={audioFilters.multiKar} />
+                    Karaoke
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div className="column is-2"></div>
           </div>
         }
 
