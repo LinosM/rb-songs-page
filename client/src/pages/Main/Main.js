@@ -6,6 +6,9 @@ import moment from "moment";
 import "./index.css";
 import Modal from "react-modal";
 import Filters from "../../components/Filters";
+import Spotlight from "../../components/Spotlight";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTimesCircle } from "@fortawesome/free-solid-svg-icons";
 
 const customStyles = {
   content: {
@@ -19,6 +22,20 @@ const customStyles = {
 };
 
 function Main() {
+  const [isDesktop, setDesktop] = useState(window.innerWidth > 1215);
+  const [isTablet, setTablet] = useState(window.innerWidth > 768 && window.innerWidth < 1216);
+  const [isMobile, setMobile] = useState(window.innerWidth < 768);
+  const updateMedia = () => {
+    setDesktop(window.innerWidth > 1215);
+    setTablet(window.innerWidth > 768 && window.innerWidth < 1216);
+    setMobile(window.innerWidth < 768);
+  };
+
+  useEffect(() => {
+    window.addEventListener("resize", updateMedia);
+    return () => window.removeEventListener("resize", updateMedia);
+  });
+
   const [showTable, setShowTable] = useState(
     {
       pony: false,
@@ -419,6 +436,22 @@ function Main() {
     (audioFilters[event.target.value] ? setAudioFilters({ ...audioFilters, [event.target.value]: false }) : setAudioFilters({ ...audioFilters, [event.target.value]: true }))
   }
 
+  function resetFilters() {
+    setInsFilters({
+      guitar: false,
+      bass: false,
+      drums: false,
+      vocals: false,
+      keys: false
+    });
+    setAudioFilters({
+      multiYes: false,
+      multiNo: false,
+      multiKar: false
+    });
+    setSearchBar("");
+  }
+
   return (
     <section className="section">
       <Modal
@@ -441,17 +474,21 @@ function Main() {
           />
         </div>
       </Modal>
+
       <div className="container">
         <div className="has-text-centered title is-2 has-text-light pt-5">Linos' Rock Band Charts</div>
         <div className="has-text-centered title is-4 has-text-light">Number of songs: {allSongs.length}</div>
-
-        <div className="columns">
-          <div className="column is-10">
+        {allSongs[0] &&
+          <Spotlight song={allSongs[0]} />
+        }
+        <div className="columns my-3">
+          <div className="column is-9">
             <input
               type="text"
-              className="input is-info mb-5"
+              className="input is-info"
               placeholder="Search for songs.."
               onChange={(e) => { setSearchBar(e.currentTarget.value) }}
+              value={searchBar}
             >
             </input>
           </div>
@@ -459,6 +496,20 @@ function Main() {
             <Filters
               onClick={openFilters}
             />
+          </div>
+          <div className="column is-1">
+            <button
+              className="button is-fullwidth is-danger is-light"
+              onClick={resetFilters}
+            >
+              {/* Shows the "Reset" text on the button depending on the width of the window */}
+              {isDesktop
+                ? <><FontAwesomeIcon className="mr-1" icon={faTimesCircle} /> Reset</>
+                : (isTablet ?
+                  <><FontAwesomeIcon className="mr-1" icon={faTimesCircle} /></>
+                  : (isMobile && <><FontAwesomeIcon className="mr-1" icon={faTimesCircle} /> Reset</>)
+                )}
+            </button>
           </div>
         </div>
 
