@@ -16,6 +16,9 @@ const customStyles = {
     left: '50%',
     right: 'auto',
     bottom: 'auto',
+    width: '90%',
+    height: 'auto',
+    maxWidth: "992px",
     marginRight: '-50%',
     transform: 'translate(-50%, -50%)'
   }
@@ -460,18 +463,22 @@ function Main() {
         style={customStyles}
         contentLabel="Example Modal"
       >
-        <span className="is-size-5 has-text-weight-bold">{videoInfo.artist} - {videoInfo.song}</span>
-        <hr></hr>
-        <div className="video-responsive">
-          <iframe
-            width="853"
-            height="480"
-            src={`https://www.youtube.com/embed/${videoInfo.id}`}
-            frameBorder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-            title="Embedded youtube"
-          />
+        <div className="columns">
+          <div className="column">
+            <span className="is-size-5 has-text-weight-bold">{videoInfo.artist} - {videoInfo.song}</span>
+            <hr></hr>
+            <div className="video-responsive">
+              <iframe
+                width="853"
+                height="480"
+                src={`https://www.youtube.com/embed/${videoInfo.id}`}
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                title="Embedded youtube"
+              />
+            </div>
+          </div>
         </div>
       </Modal>
 
