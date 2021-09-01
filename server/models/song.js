@@ -20,7 +20,8 @@ const songSchema = new Schema({
     download: { type: String },
     difficulties: { type: String },
     type: { type: String },
-    source: { type: String }
+    source: { type: String },
+    preview: { type: String }
 });
 
 const Song = mongoose.model("Song", songSchema);
