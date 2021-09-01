@@ -19,7 +19,7 @@ function TableBody(props) {
     <tr>
       <td className="date">{moment(props.song.updated_date).format("YYYY-MM-DD")}</td>
       <td>{props.song.artist}</td>
-      <td><a href={props.song.download} target="_blank">{props.song.song_name}</a></td>
+      <td><a href={props.song.download} target="_blank" rel="noopener noreferrer">{props.song.song_name}</a></td>
       <td>{props.song.source ? props.song.source : ""}</td>
       {isDesktop &&
         <>
