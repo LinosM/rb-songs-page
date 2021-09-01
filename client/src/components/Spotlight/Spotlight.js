@@ -21,9 +21,11 @@ function Spotlight(props) {
       <div className="has-text-centered title is-4 has-text-light is-underlined">Latest Release</div>
       <div className="columns">
         <div className="column is-6">
-          <figure className="image">
-            <img src={props.song.preview} className="has-image-centered" style={{ maxHeight: "400px", width: "auto" }}></img>
-          </figure>
+          <a href={props.song.download} target="_blank" rel="noopener noreferrer">
+            <figure className="image">
+              <img src={props.song.preview} className="has-image-centered previewImage"></img>
+            </figure>
+          </a>
         </div>
         <div className="column is-6">
           <div className="video-responsive">
