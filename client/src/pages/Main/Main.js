@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, createRef } from "react";
 import Table from "../../components/Table";
 import Button from "../../components/Button";
 import API from "../../utils/API";
@@ -25,6 +25,14 @@ const customStyles = {
 };
 
 function Main() {
+  const scrollObj = {
+    pony: createRef(),
+    anime: createRef(),
+    reg: createRef(),
+    indie: createRef(),
+    vg: createRef(),
+    tv: createRef()
+  }
   const [isDesktop, setDesktop] = useState(window.innerWidth > 1215);
   const [isTablet, setTablet] = useState(window.innerWidth > 768 && window.innerWidth < 1216);
   const [isMobile, setMobile] = useState(window.innerWidth < 768);
@@ -167,6 +175,8 @@ function Main() {
 
     if (showTable[category] === false) setShowTable({ ...showTable, [category]: true });
     else setShowTable({ ...showTable, [category]: false });
+
+    scrollObj[category].current.scrollIntoView({ behavior: "smooth" });
   }
 
   /*
@@ -569,16 +579,18 @@ function Main() {
           </div>
         }
 
+        <br ref={scrollObj.pony} />
+
         {filteredSplitSongs.pony.length !== 0 &&
           <>
-            <span className="is-size-6 has-text-white is-italic">Last Updated: {allSongs[0] && moment(allSongs.filter(e => e.type === "pony")[0].updated_date).format("YYYY-MM-DD")}</span>
+            <span ref={scrollObj.pony} className="is-size-6 has-text-white is-italic">Last Updated: {allSongs[0] && moment(allSongs.filter(e => e.type === "pony")[0].updated_date).format("YYYY-MM-DD")}</span>
             <Button value={"pony"} onClick={openTable} label={"Pony Songs"} length={filteredSplitSongs.pony.length} />
           </>
         }
         {showTable.pony && filteredSplitSongs.pony.length !== 0 &&
-          <Table sortTable={sortTable} category="pony" upDown={sortHeader} songs={filteredSplitSongs.pony} openModal={openModal} />
+          <Table sortTable={sortTable} category="pony" upDown={sortHeader} songs={filteredSplitSongs.pony} openModal={openModal} scrollToTop={() => scrollObj.pony.current.scrollIntoView({ behavior: "smooth" })}/>
         }
-        <br />
+        <br ref={scrollObj.anime} />
 
         {filteredSplitSongs.anime.length !== 0 &&
           <>
@@ -587,9 +599,9 @@ function Main() {
           </>
         }
         {showTable.anime && filteredSplitSongs.anime.length !== 0 &&
-          <Table sortTable={sortTable} category="anime" upDown={sortHeader} songs={filteredSplitSongs.anime} openModal={openModal} />
+          <Table sortTable={sortTable} category="anime" upDown={sortHeader} songs={filteredSplitSongs.anime} openModal={openModal} scrollToTop={() => scrollObj.anime.current.scrollIntoView({ behavior: "smooth" })}/>
         }
-        <br />
+        <br ref={scrollObj.vg} />
 
         {filteredSplitSongs.vg.length !== 0 &&
           <>
@@ -598,9 +610,9 @@ function Main() {
           </>
         }
         {showTable.vg && filteredSplitSongs.vg.length !== 0 &&
-          <Table sortTable={sortTable} category="vg" upDown={sortHeader} songs={filteredSplitSongs.vg} openModal={openModal} />
+          <Table sortTable={sortTable} category="vg" upDown={sortHeader} songs={filteredSplitSongs.vg} openModal={openModal} scrollToTop={() => scrollObj.vg.current.scrollIntoView({ behavior: "smooth" })}/>
         }
-        <br />
+        <br ref={scrollObj.reg} />
 
 
         {filteredSplitSongs.reg.length !== 0 &&
@@ -610,9 +622,9 @@ function Main() {
           </>
         }
         {showTable.reg && filteredSplitSongs.reg.length !== 0 &&
-          <Table sortTable={sortTable} category="reg" upDown={sortHeader} songs={filteredSplitSongs.reg} openModal={openModal} />
+          <Table sortTable={sortTable} category="reg" upDown={sortHeader} songs={filteredSplitSongs.reg} openModal={openModal} scrollToTop={() => scrollObj.reg.current.scrollIntoView({ behavior: "smooth" })}/>
         }
-        <br />
+        <br ref={scrollObj.indie} />
 
         {filteredSplitSongs.indie.length !== 0 &&
           <>
@@ -621,9 +633,9 @@ function Main() {
           </>
         }
         {showTable.indie && filteredSplitSongs.indie.length !== 0 &&
-          <Table sortTable={sortTable} category="indie" upDown={sortHeader} songs={filteredSplitSongs.indie} openModal={openModal} />
+          <Table sortTable={sortTable} category="indie" upDown={sortHeader} songs={filteredSplitSongs.indie} openModal={openModal} scrollToTop={() => scrollObj.indie.current.scrollIntoView({ behavior: "smooth" })}/>
         }
-        <br />
+        <br ref={scrollObj.tv} />
 
         {filteredSplitSongs.tv.length !== 0 &&
           <>
@@ -632,7 +644,7 @@ function Main() {
           </>
         }
         {showTable.tv && filteredSplitSongs.tv.length !== 0 &&
-          <Table sortTable={sortTable} category="tv" upDown={sortHeader} songs={filteredSplitSongs.tv} openModal={openModal} />
+          <Table sortTable={sortTable} category="tv" upDown={sortHeader} songs={filteredSplitSongs.tv} openModal={openModal} scrollToTop={() => scrollObj.tv.current.scrollIntoView({ behavior: "smooth" })}/>
         }
 
         <div className="mt-5">
