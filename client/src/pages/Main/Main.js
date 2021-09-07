@@ -297,15 +297,7 @@ function Main() {
 
   // Combines all the song's metadata into one string to search through
   function filterValues(song) {
-    let string = song.updated_date + " " + song.c3.toLowerCase() + " " + song.song_name.toLowerCase() + " " + song.artist.toLowerCase() + " " + song.release_date + song.source.toLowerCase() + song.author.toLowerCase() + song.second_author.toLowerCase();
-
-    // Allows the user to type an instrument in the search bar and return songs with that instrument
-    if (song.g === "G") string += " guitar";
-    if (song.b === "B") string += " bass";
-    if (song.d === "D") string += " drums";
-    if (song.k === "K") string += " keys";
-    if (song.v === "V") string += " vocals";
-
+    let string = song.updated_date + " " + song.song_name.toLowerCase() + " " + song.artist.toLowerCase() + " " + song.release_date + song.source.toLowerCase() + song.author.toLowerCase() + song.second_author.toLowerCase();
     return string;
   }
 
