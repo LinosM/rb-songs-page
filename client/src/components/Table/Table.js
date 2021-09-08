@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import TableBody from "../../components/TableBody";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSortAlphaUp, faSortAlphaDown, faSortNumericUpAlt, faSortNumericDownAlt } from '@fortawesome/free-solid-svg-icons';
+import { faSortAlphaUp, faSortAlphaDown, faSortNumericUpAlt, faSortNumericDownAlt, faArrowUp } from '@fortawesome/free-solid-svg-icons';
 import "./index.css";
 
 function Table(props) {
@@ -71,7 +71,10 @@ function Table(props) {
         </tbody>
       </table>
       {props.category !== "lastTen" &&
-        <button className="button is-small mb-2" onClick={props.scrollToTop}>Return to top</button>
+        <button className="button is-small mb-2" onClick={props.scrollToTop}>
+          <FontAwesomeIcon icon={faArrowUp} className="mr-2"/>
+          Return to top
+        </button>
       }
     </>
   )
