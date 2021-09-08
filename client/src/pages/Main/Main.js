@@ -580,7 +580,6 @@ function Main() {
         }
 
         <br ref={scrollObj.pony} />
-
         {filteredSplitSongs.pony.length !== 0 &&
           <>
             <span ref={scrollObj.pony} className="is-size-6 has-text-white is-italic">Last Updated: {allSongs[0] && moment(allSongs.filter(e => e.type === "pony")[0].updated_date).format("YYYY-MM-DD")}</span>
@@ -590,8 +589,8 @@ function Main() {
         {showTable.pony && filteredSplitSongs.pony.length !== 0 &&
           <Table sortTable={sortTable} category="pony" upDown={sortHeader} songs={filteredSplitSongs.pony} openModal={openModal} scrollToTop={() => scrollObj.pony.current.scrollIntoView({ behavior: "smooth" })}/>
         }
-        <br ref={scrollObj.anime} />
 
+        <br ref={scrollObj.anime} />
         {filteredSplitSongs.anime.length !== 0 &&
           <>
             <span className="is-size-6 has-text-white is-italic">Last Updated: {allSongs[0] && moment(allSongs.filter(e => e.type === "anime")[0].updated_date).format("YYYY-MM-DD")}</span>
@@ -601,8 +600,8 @@ function Main() {
         {showTable.anime && filteredSplitSongs.anime.length !== 0 &&
           <Table sortTable={sortTable} category="anime" upDown={sortHeader} songs={filteredSplitSongs.anime} openModal={openModal} scrollToTop={() => scrollObj.anime.current.scrollIntoView({ behavior: "smooth" })}/>
         }
-        <br ref={scrollObj.vg} />
 
+        <br ref={scrollObj.vg} />
         {filteredSplitSongs.vg.length !== 0 &&
           <>
             <span className="is-size-6 has-text-white is-italic">Last Updated: {allSongs[0] && moment(allSongs.filter(e => e.type === "vg")[0].updated_date).format("YYYY-MM-DD")}</span>
@@ -612,9 +611,8 @@ function Main() {
         {showTable.vg && filteredSplitSongs.vg.length !== 0 &&
           <Table sortTable={sortTable} category="vg" upDown={sortHeader} songs={filteredSplitSongs.vg} openModal={openModal} scrollToTop={() => scrollObj.vg.current.scrollIntoView({ behavior: "smooth" })}/>
         }
+
         <br ref={scrollObj.reg} />
-
-
         {filteredSplitSongs.reg.length !== 0 &&
           <>
             <span className="is-size-6 has-text-white is-italic">Last Updated: {allSongs[0] && moment(allSongs.filter(e => e.type === "reg")[0].updated_date).format("YYYY-MM-DD")}</span>
@@ -624,8 +622,8 @@ function Main() {
         {showTable.reg && filteredSplitSongs.reg.length !== 0 &&
           <Table sortTable={sortTable} category="reg" upDown={sortHeader} songs={filteredSplitSongs.reg} openModal={openModal} scrollToTop={() => scrollObj.reg.current.scrollIntoView({ behavior: "smooth" })}/>
         }
-        <br ref={scrollObj.indie} />
 
+        <br ref={scrollObj.indie} />
         {filteredSplitSongs.indie.length !== 0 &&
           <>
             <span className="is-size-6 has-text-white is-italic">Last Updated: {allSongs[0] && moment(allSongs.filter(e => e.type === "indie")[0].updated_date).format("YYYY-MM-DD")}</span>
@@ -635,8 +633,8 @@ function Main() {
         {showTable.indie && filteredSplitSongs.indie.length !== 0 &&
           <Table sortTable={sortTable} category="indie" upDown={sortHeader} songs={filteredSplitSongs.indie} openModal={openModal} scrollToTop={() => scrollObj.indie.current.scrollIntoView({ behavior: "smooth" })}/>
         }
-        <br ref={scrollObj.tv} />
 
+        <br ref={scrollObj.tv} />
         {filteredSplitSongs.tv.length !== 0 &&
           <>
             <span className="is-size-6 has-text-white is-italic">Last Updated: {allSongs[0] && moment(allSongs.filter(e => e.type === "tv")[0].updated_date).format("YYYY-MM-DD")}</span>
