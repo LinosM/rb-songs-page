@@ -57,6 +57,7 @@ function Main() {
       tv: false
     }
   );
+  const [currentTable, setCurrentTable] = useState("");
   const [sortHeader, setSortHeader] = useState(
     {
       song: false,
@@ -164,7 +165,12 @@ function Main() {
     searchSong();
   }, [searchBar])
 
-  function openFilters(event) {
+  // Scrolls to top of the a table when opened up
+  useEffect((e) => {
+    if (showTable[currentTable]) scrollObj[currentTable].current.scrollIntoView({ behavior: "smooth" });
+  }, [currentTable])
+
+  function openFilters() {
     if (filterBox) setFilterBox(false);
     else setFilterBox(true);
   }
@@ -173,10 +179,9 @@ function Main() {
   function openTable(event) {
     let category = event.currentTarget.value;
 
+    setCurrentTable(category);
     if (showTable[category] === false) setShowTable({ ...showTable, [category]: true });
-    else setShowTable({ ...showTable, [category]: false });
-
-    scrollObj[category].current.scrollIntoView({ behavior: "smooth" });
+    else setShowTable({ ...showTable, [category]: false });    
   }
 
   /*
@@ -579,67 +584,61 @@ function Main() {
           </div>
         }
 
-        <br ref={scrollObj.pony} />
         {filteredSplitSongs.pony.length !== 0 &&
-          <>
+          <div>
             <span ref={scrollObj.pony} className="is-size-6 has-text-white is-italic">Last Updated: {allSongs[0] && moment(allSongs.filter(e => e.type === "pony")[0].updated_date).format("YYYY-MM-DD")}</span>
             <Button value={"pony"} onClick={openTable} label={"Pony Songs"} length={filteredSplitSongs.pony.length} />
-          </>
+          </div>
         }
         {showTable.pony && filteredSplitSongs.pony.length !== 0 &&
           <Table sortTable={sortTable} category="pony" upDown={sortHeader} songs={filteredSplitSongs.pony} openModal={openModal} scrollToTop={() => scrollObj.pony.current.scrollIntoView({ behavior: "smooth" })}/>
         }
 
-        <br ref={scrollObj.anime} />
         {filteredSplitSongs.anime.length !== 0 &&
-          <>
-            <span className="is-size-6 has-text-white is-italic">Last Updated: {allSongs[0] && moment(allSongs.filter(e => e.type === "anime")[0].updated_date).format("YYYY-MM-DD")}</span>
+          <div>
+            <span ref={scrollObj.anime} className="is-size-6 has-text-white is-italic">Last Updated: {allSongs[0] && moment(allSongs.filter(e => e.type === "anime")[0].updated_date).format("YYYY-MM-DD")}</span>
             <Button value={"anime"} onClick={openTable} label={"Anime / Japanese Songs"} length={filteredSplitSongs.anime.length} />
-          </>
+          </div>
         }
         {showTable.anime && filteredSplitSongs.anime.length !== 0 &&
           <Table sortTable={sortTable} category="anime" upDown={sortHeader} songs={filteredSplitSongs.anime} openModal={openModal} scrollToTop={() => scrollObj.anime.current.scrollIntoView({ behavior: "smooth" })}/>
         }
 
-        <br ref={scrollObj.vg} />
         {filteredSplitSongs.vg.length !== 0 &&
-          <>
-            <span className="is-size-6 has-text-white is-italic">Last Updated: {allSongs[0] && moment(allSongs.filter(e => e.type === "vg")[0].updated_date).format("YYYY-MM-DD")}</span>
+          <div>
+            <span ref={scrollObj.vg} className="is-size-6 has-text-white is-italic">Last Updated: {allSongs[0] && moment(allSongs.filter(e => e.type === "vg")[0].updated_date).format("YYYY-MM-DD")}</span>
             <Button value={"vg"} onClick={openTable} label={"Video Game Music"} length={filteredSplitSongs.vg.length} />
-          </>
+          </div>
         }
         {showTable.vg && filteredSplitSongs.vg.length !== 0 &&
           <Table sortTable={sortTable} category="vg" upDown={sortHeader} songs={filteredSplitSongs.vg} openModal={openModal} scrollToTop={() => scrollObj.vg.current.scrollIntoView({ behavior: "smooth" })}/>
         }
 
-        <br ref={scrollObj.reg} />
         {filteredSplitSongs.reg.length !== 0 &&
-          <>
-            <span className="is-size-6 has-text-white is-italic">Last Updated: {allSongs[0] && moment(allSongs.filter(e => e.type === "reg")[0].updated_date).format("YYYY-MM-DD")}</span>
+          <div>
+            <span ref={scrollObj.reg} className="is-size-6 has-text-white is-italic">Last Updated: {allSongs[0] && moment(allSongs.filter(e => e.type === "reg")[0].updated_date).format("YYYY-MM-DD")}</span>
             <Button value={"reg"} onClick={openTable} label={"Normie Music"} length={filteredSplitSongs.reg.length} />
-          </>
+          </div>
         }
         {showTable.reg && filteredSplitSongs.reg.length !== 0 &&
           <Table sortTable={sortTable} category="reg" upDown={sortHeader} songs={filteredSplitSongs.reg} openModal={openModal} scrollToTop={() => scrollObj.reg.current.scrollIntoView({ behavior: "smooth" })}/>
         }
 
-        <br ref={scrollObj.indie} />
         {filteredSplitSongs.indie.length !== 0 &&
-          <>
-            <span className="is-size-6 has-text-white is-italic">Last Updated: {allSongs[0] && moment(allSongs.filter(e => e.type === "indie")[0].updated_date).format("YYYY-MM-DD")}</span>
+          <div>
+            <span ref={scrollObj.indie} className="is-size-6 has-text-white is-italic">Last Updated: {allSongs[0] && moment(allSongs.filter(e => e.type === "indie")[0].updated_date).format("YYYY-MM-DD")}</span>
             <Button value={"indie"} onClick={openTable} label={"Indies"} length={filteredSplitSongs.indie.length} />
-          </>
+          </div>
         }
         {showTable.indie && filteredSplitSongs.indie.length !== 0 &&
           <Table sortTable={sortTable} category="indie" upDown={sortHeader} songs={filteredSplitSongs.indie} openModal={openModal} scrollToTop={() => scrollObj.indie.current.scrollIntoView({ behavior: "smooth" })}/>
         }
 
-        <br ref={scrollObj.tv} />
         {filteredSplitSongs.tv.length !== 0 &&
-          <>
-            <span className="is-size-6 has-text-white is-italic">Last Updated: {allSongs[0] && moment(allSongs.filter(e => e.type === "tv")[0].updated_date).format("YYYY-MM-DD")}</span>
+          <div>
+            <span ref={scrollObj.tv} className="is-size-6 has-text-white is-italic">Last Updated: {allSongs[0] && moment(allSongs.filter(e => e.type === "tv")[0].updated_date).format("YYYY-MM-DD")}</span>
             <Button value={"tv"} onClick={openTable} label={"TV / Cartoon Shows"} length={filteredSplitSongs.tv.length} />
-          </>
+          </div>
         }
         {showTable.tv && filteredSplitSongs.tv.length !== 0 &&
           <Table sortTable={sortTable} category="tv" upDown={sortHeader} songs={filteredSplitSongs.tv} openModal={openModal} scrollToTop={() => scrollObj.tv.current.scrollIntoView({ behavior: "smooth" })}/>
