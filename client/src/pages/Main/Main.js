@@ -102,7 +102,8 @@ function Main() {
   const [audioFilters, setAudioFilters] = useState({
     multiYes: false,
     multiNo: false,
-    multiKar: false
+    multiKar: false,
+    multiDIY: false
   });
   const [searchBar, setSearchBar] = useState("");
 
@@ -232,6 +233,7 @@ function Main() {
     if (audioFilters.multiKar) multiFilters.push("Karaoke");
     if (audioFilters.multiNo) multiFilters.push("No");
     if (audioFilters.multiYes) multiFilters.push("Yes");
+    if (audioFilters.multiDIY) multiFilters.push("DIY");
 
     // If all filters are unchecked, every song is passed to the search or displayed
     if (filters.length === 0 && multiFilters.length === 0) {
@@ -576,6 +578,10 @@ function Main() {
                   <label className="checkbox mr-2">
                     <input type="checkbox" className="mr-1" value="multiKar" onChange={checkedAudio} checked={audioFilters.multiKar} />
                     Karaoke
+                  </label>
+                  <label className="checkbox mr-2">
+                    <input type="checkbox" className="mr-1" value="multiDIY" onChange={checkedAudio} checked={audioFilters.multiDIY} />
+                    DIY
                   </label>
                 </div>
               </div>
