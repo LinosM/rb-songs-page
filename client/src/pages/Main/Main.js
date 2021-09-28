@@ -520,46 +520,20 @@ function Main() {
         {filterBox &&
           <>
             <div className="columns is-desktop has-text-white has-text-centered">
-              <div className="column border mr-1 mt-2">
+              <div className="column is-full-tablet is-two-thirds-desktop border mr-1 mt-2">
                 <div className="columns">
-                  <div className="column is-size-5">Instruments</div>
+                  <div className="column is-size-3">Instruments</div>
                 </div>
-                <div className="columns">
-                  {/* 
-                    TODO: Find a better way to handle this
-
-                    When width is <504px, instrument icons are stacked in a 3x2 grid
-                    Else, instrument icons are 5x1 grid
-                  */}
-                  {isMobile ?
-                    <>
-                      <div className="column">
-                        <div className="columns is-mobile">
-                          <div className="column">
-                            <figure className="image is-64x64 center mb-2"><img className="icon" src={insFilters.guitar ? Guitar : GuitarB} value="guitar" onClick={checked} /></figure>
-                            <figure className="image is-64x64 center"><img className="icon" src={insFilters.bass ? Bass : BassB} value="bass" onClick={checked} /></figure>
-                          </div>
-                          <div className="column">
-                            <figure className="image is-64x64 center mb-2"><img className="icon" src={insFilters.drums ? Drums : DrumsB} value="drums" onClick={checked} /></figure>
-                            <figure className="image is-64x64 center"><img className="icon" src={insFilters.keys ? Keys : KeysB} value="keys" onClick={checked} /></figure>
-                          </div>
-                          <div className="column"><figure className="image is-64x64 center"><img className="icon" src={insFilters.vocals ? Vocals : VocalsB} value="vocals" onClick={checked} /></figure></div>
-                        </div>
-                      </div>
-                    </>
-                    :
-                    <>
-                      <div className="column">
-                        <div className="columns is-mobile">
-                          <div className="column"><figure className="image is-64x64 center"><img className="icon" src={insFilters.guitar ? Guitar : GuitarB} value="guitar" onClick={checked} /></figure></div>
-                          <div className="column"><figure className="image is-64x64 center"><img className="icon" src={insFilters.bass ? Bass : BassB} value="bass" onClick={checked} /></figure></div>
-                          <div className="column"><figure className="image is-64x64 center"><img className="icon" src={insFilters.drums ? Drums : DrumsB} value="drums" onClick={checked} /></figure></div>
-                          <div className="column"><figure className="image is-64x64 center"><img className="icon" src={insFilters.keys ? Keys : KeysB} value="keys" onClick={checked} /></figure></div>
-                          <div className="column"><figure className="image is-64x64 center"><img className="icon" src={insFilters.vocals ? Vocals : VocalsB} value="vocals" onClick={checked} /></figure></div>
-                        </div>
-                      </div>
-                    </>
-                  }
+                <div className="columns is-gapless">
+                  <div className="column">
+                    <div className="columns is-gapless is-multiline is-mobile is-0">
+                      <div className="column"><figure className="image is-96x96 center"><img className="icon" src={insFilters.guitar ? Guitar : GuitarB} value="guitar" onClick={checked} /></figure></div>
+                      <div className="column"><figure className="image is-96x96 center"><img className="icon" src={insFilters.bass ? Bass : BassB} value="bass" onClick={checked} /></figure></div>
+                      <div className="column"><figure className="image is-96x96 center"><img className="icon" src={insFilters.drums ? Drums : DrumsB} value="drums" onClick={checked} /></figure></div>
+                      <div className="column"><figure className="image is-96x96 center"><img className="icon" src={insFilters.keys ? Keys : KeysB} value="keys" onClick={checked} /></figure></div>
+                      <div className="column"><figure className="image is-96x96 center"><img className="icon" src={insFilters.vocals ? Vocals : VocalsB} value="vocals" onClick={checked} /></figure></div>
+                    </div>
+                  </div>
                 </div>
               </div>
               <div className="column border ml-1 mt-2">
