@@ -20,7 +20,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "nodemon": "^2.0.12"
+    "nodemon": "^2.0.13"
   },
   "dependencies": {
     "@creativebulma/bulma-divider": "^1.1.0",
@@ -30,12 +30,13 @@
     "axios": "^0.21.4",
     "bulma": "^0.9.3",
     "concurrently": "^5.2.0",
-    "connect-mongo": "^2.0.1",
+    "connect-mongo": "^4.6.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-session": "^1.17.1",
     "if-env": "^1.0.4",
     "moment": "^2.29.1",
+    "mongodb": "^4.1.2",
     "mongoose": "^5.13.9",
     "morgan": "^1.10.0",
     "react-bulma-components": "^4.0.7",
