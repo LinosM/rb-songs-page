@@ -20,8 +20,9 @@ function Spotlight(props) {
 
   return (
     <>
-      <div className="has-text-centered title is-4 has-text-light is-underlined">Latest Release</div>
-      <p className="has-text-centered is-italic title is-4 has-text-light">{moment(props.song.release_date).format('MMMM Do, YYYY')}</p>
+      <hr />
+      <div className="has-text-centered has-text-white title is-4 is-underlined">Latest Release</div>
+      <p className="has-text-centered has-text-white is-italic title is-4">{moment(props.song.release_date).format('MMMM Do, YYYY')}</p>
       <div className="columns is-desktop">
         <div className="column">
           <a href={props.song.download} target="_blank" rel="noopener noreferrer">
@@ -44,6 +45,7 @@ function Spotlight(props) {
           </div>
         </div>
       </div>
+      <hr />
     </>
   )
 }
