@@ -9,6 +9,7 @@ import Filters from "../../components/Filters";
 import Spotlight from "../../components/Spotlight";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimesCircle } from "@fortawesome/free-solid-svg-icons";
+import { Guitar, Bass, Drums, Vocals, Keys, GuitarB, BassB, DrumsB, VocalsB, KeysB } from "../../images/rb_icons";
 
 const customStyles = {
   content: {
@@ -35,11 +36,11 @@ function Main() {
   }
   const [isDesktop, setDesktop] = useState(window.innerWidth > 1215);
   const [isTablet, setTablet] = useState(window.innerWidth > 768 && window.innerWidth < 1216);
-  const [isMobile, setMobile] = useState(window.innerWidth < 768);
+  const [isMobile, setMobile] = useState(window.innerWidth < 504);
   const updateMedia = () => {
     setDesktop(window.innerWidth > 1215);
     setTablet(window.innerWidth > 768 && window.innerWidth < 1216);
-    setMobile(window.innerWidth < 768);
+    setMobile(window.innerWidth < 504);
   };
 
   useEffect(() => {
@@ -182,7 +183,7 @@ function Main() {
 
     setCurrentTable(category);
     if (showTable[category] === false) setShowTable({ ...showTable, [category]: true });
-    else setShowTable({ ...showTable, [category]: false });    
+    else setShowTable({ ...showTable, [category]: false });
   }
 
   /*
@@ -441,7 +442,8 @@ function Main() {
   }
 
   function checked(event) {
-    (insFilters[event.target.value] ? setInsFilters({ ...insFilters, [event.target.value]: false }) : setInsFilters({ ...insFilters, [event.target.value]: true }))
+    const instrument = event.target.getAttribute("value");
+    (insFilters[instrument] ? setInsFilters({ ...insFilters, [instrument]: false }) : setInsFilters({ ...insFilters, [instrument]: true }))
   }
 
   function checkedAudio(event) {
@@ -513,81 +515,90 @@ function Main() {
               onClick={openFilters}
             />
           </div>
-          <div className="column is-1">
-            <button
-              className="button is-fullwidth is-danger is-light"
-              onClick={resetFilters}
-            >
-              {/* Shows the "Reset" text on the button depending on the width of the window */}
-              {isDesktop
-                ? <><FontAwesomeIcon className="mr-1" icon={faTimesCircle} /> Reset</>
-                : (isTablet ?
-                  <><FontAwesomeIcon className="mr-1" icon={faTimesCircle} /></>
-                  : (isMobile && <><FontAwesomeIcon className="mr-1" icon={faTimesCircle} /> Reset</>)
-                )}
-            </button>
-          </div>
         </div>
 
         {filterBox &&
-          <div className="columns has-text-white">
-            <div className="column is-2"></div>
-            <div className="column is-4 border mr-1 mt-2">
-              <div className="columns">
-                <div className="column has-text-centered is-size-3">Instruments</div>
+          <>
+            <div className="columns is-desktop has-text-white has-text-centered">
+              <div className="column border mr-1 mt-2">
+                <div className="columns">
+                  <div className="column is-size-5">Instruments</div>
+                </div>
+                <div className="columns">
+                  {/* 
+                    TODO: Find a better way to handle this
+
+                    When width is <504px, instrument icons are stacked in a 3x2 grid
+                    Else, instrument icons are 5x1 grid
+                  */}
+                  {isMobile ?
+                    <>
+                      <div className="column">
+                        <div className="columns is-mobile">
+                          <div className="column">
+                            <figure className="image is-64x64 center mb-2"><img className="icon" src={insFilters.guitar ? Guitar : GuitarB} value="guitar" onClick={checked} /></figure>
+                            <figure className="image is-64x64 center"><img className="icon" src={insFilters.bass ? Bass : BassB} value="bass" onClick={checked} /></figure>
+                          </div>
+                          <div className="column">
+                            <figure className="image is-64x64 center mb-2"><img className="icon" src={insFilters.drums ? Drums : DrumsB} value="drums" onClick={checked} /></figure>
+                            <figure className="image is-64x64 center"><img className="icon" src={insFilters.keys ? Keys : KeysB} value="keys" onClick={checked} /></figure>
+                          </div>
+                          <div className="column"><figure className="image is-64x64 center"><img className="icon" src={insFilters.vocals ? Vocals : VocalsB} value="vocals" onClick={checked} /></figure></div>
+                        </div>
+                      </div>
+                    </>
+                    :
+                    <>
+                      <div className="column">
+                        <div className="columns is-mobile">
+                          <div className="column"><figure className="image is-64x64 center"><img className="icon" src={insFilters.guitar ? Guitar : GuitarB} value="guitar" onClick={checked} /></figure></div>
+                          <div className="column"><figure className="image is-64x64 center"><img className="icon" src={insFilters.bass ? Bass : BassB} value="bass" onClick={checked} /></figure></div>
+                          <div className="column"><figure className="image is-64x64 center"><img className="icon" src={insFilters.drums ? Drums : DrumsB} value="drums" onClick={checked} /></figure></div>
+                          <div className="column"><figure className="image is-64x64 center"><img className="icon" src={insFilters.keys ? Keys : KeysB} value="keys" onClick={checked} /></figure></div>
+                          <div className="column"><figure className="image is-64x64 center"><img className="icon" src={insFilters.vocals ? Vocals : VocalsB} value="vocals" onClick={checked} /></figure></div>
+                        </div>
+                      </div>
+                    </>
+                  }
+                </div>
               </div>
-              <div className="columns">
-                <div className="column has-text-centered" style={{ userSelect: "none" }}>
-                  <label className="checkbox mr-2">
-                    <input type="checkbox" className="mr-1" value="guitar" onChange={checked} checked={insFilters.guitar} />
-                    Guitar
-                  </label>
-                  <label className="checkbox mr-2">
-                    <input type="checkbox" className="mr-1" value="bass" onChange={checked} checked={insFilters.bass} />
-                    Bass
-                  </label>
-                  <label className="checkbox mr-2">
-                    <input type="checkbox" className="mr-1" value="drums" onChange={checked} checked={insFilters.drums} />
-                    Drums
-                  </label>
-                  <label className="checkbox mr-2">
-                    <input type="checkbox" className="mr-1" value="keys" onChange={checked} checked={insFilters.keys} />
-                    Keys
-                  </label>
-                  <label className="checkbox mr-2">
-                    <input type="checkbox" className="mr-1" value="vocals" onChange={checked} checked={insFilters.vocals} />
-                    Vocals
-                  </label>
+              <div className="column border ml-1 mt-2">
+                <div className="columns">
+                  <div className="column is-size-3">Audio Type</div>
+                </div>
+                <div className="columns">
+                  <div className="column" style={{ userSelect: "none" }}>
+                    <label className="checkbox mr-2">
+                      <input type="checkbox" className="mr-1" value="multiYes" onChange={checkedAudio} checked={audioFilters.multiYes} />
+                      Multitracks
+                    </label>
+                    <label className="checkbox mr-2">
+                      <input type="checkbox" className="mr-1" value="multiNo" onChange={checkedAudio} checked={audioFilters.multiNo} />
+                      Single Audio
+                    </label>
+                    <label className="checkbox mr-2">
+                      <input type="checkbox" className="mr-1" value="multiKar" onChange={checkedAudio} checked={audioFilters.multiKar} />
+                      Karaoke
+                    </label>
+                    <label className="checkbox mr-2">
+                      <input type="checkbox" className="mr-1" value="multiDIY" onChange={checkedAudio} checked={audioFilters.multiDIY} />
+                      DIY
+                    </label>
+                  </div>
                 </div>
               </div>
             </div>
-            <div className="column is-4 border ml-1 mt-2">
-              <div className="columns">
-                <div className="column has-text-centered is-size-3">Audio Type</div>
-              </div>
-              <div className="columns">
-                <div className="column has-text-centered" style={{ userSelect: "none" }}>
-                  <label className="checkbox mr-2">
-                    <input type="checkbox" className="mr-1" value="multiYes" onChange={checkedAudio} checked={audioFilters.multiYes} />
-                    Multitracks
-                  </label>
-                  <label className="checkbox mr-2">
-                    <input type="checkbox" className="mr-1" value="multiNo" onChange={checkedAudio} checked={audioFilters.multiNo} />
-                    Single Audio
-                  </label>
-                  <label className="checkbox mr-2">
-                    <input type="checkbox" className="mr-1" value="multiKar" onChange={checkedAudio} checked={audioFilters.multiKar} />
-                    Karaoke
-                  </label>
-                  <label className="checkbox mr-2">
-                    <input type="checkbox" className="mr-1" value="multiDIY" onChange={checkedAudio} checked={audioFilters.multiDIY} />
-                    DIY
-                  </label>
-                </div>
+            <div className="columns has-text-centered">
+              <div className="column is-one-quarter center">
+                <button
+                  className="button is-fullwidth is-danger is-light"
+                  onClick={resetFilters}
+                >
+                  <FontAwesomeIcon className="mr-1" icon={faTimesCircle} /> Reset
+                </button>
               </div>
             </div>
-            <div className="column is-2"></div>
-          </div>
+          </>
         }
 
         {filteredSplitSongs.pony.length !== 0 &&
@@ -597,7 +608,7 @@ function Main() {
           </div>
         }
         {showTable.pony && filteredSplitSongs.pony.length !== 0 &&
-          <Table sortTable={sortTable} category="pony" upDown={sortHeader} songs={filteredSplitSongs.pony} openModal={openModal} scrollToTop={() => scrollObj.pony.current.scrollIntoView({ behavior: "smooth" })}/>
+          <Table sortTable={sortTable} category="pony" upDown={sortHeader} songs={filteredSplitSongs.pony} openModal={openModal} scrollToTop={() => scrollObj.pony.current.scrollIntoView({ behavior: "smooth" })} />
         }
 
         {filteredSplitSongs.anime.length !== 0 &&
@@ -607,7 +618,7 @@ function Main() {
           </div>
         }
         {showTable.anime && filteredSplitSongs.anime.length !== 0 &&
-          <Table sortTable={sortTable} category="anime" upDown={sortHeader} songs={filteredSplitSongs.anime} openModal={openModal} scrollToTop={() => scrollObj.anime.current.scrollIntoView({ behavior: "smooth" })}/>
+          <Table sortTable={sortTable} category="anime" upDown={sortHeader} songs={filteredSplitSongs.anime} openModal={openModal} scrollToTop={() => scrollObj.anime.current.scrollIntoView({ behavior: "smooth" })} />
         }
 
         {filteredSplitSongs.vg.length !== 0 &&
@@ -617,7 +628,7 @@ function Main() {
           </div>
         }
         {showTable.vg && filteredSplitSongs.vg.length !== 0 &&
-          <Table sortTable={sortTable} category="vg" upDown={sortHeader} songs={filteredSplitSongs.vg} openModal={openModal} scrollToTop={() => scrollObj.vg.current.scrollIntoView({ behavior: "smooth" })}/>
+          <Table sortTable={sortTable} category="vg" upDown={sortHeader} songs={filteredSplitSongs.vg} openModal={openModal} scrollToTop={() => scrollObj.vg.current.scrollIntoView({ behavior: "smooth" })} />
         }
 
         {filteredSplitSongs.reg.length !== 0 &&
@@ -627,7 +638,7 @@ function Main() {
           </div>
         }
         {showTable.reg && filteredSplitSongs.reg.length !== 0 &&
-          <Table sortTable={sortTable} category="reg" upDown={sortHeader} songs={filteredSplitSongs.reg} openModal={openModal} scrollToTop={() => scrollObj.reg.current.scrollIntoView({ behavior: "smooth" })}/>
+          <Table sortTable={sortTable} category="reg" upDown={sortHeader} songs={filteredSplitSongs.reg} openModal={openModal} scrollToTop={() => scrollObj.reg.current.scrollIntoView({ behavior: "smooth" })} />
         }
 
         {filteredSplitSongs.indie.length !== 0 &&
@@ -637,7 +648,7 @@ function Main() {
           </div>
         }
         {showTable.indie && filteredSplitSongs.indie.length !== 0 &&
-          <Table sortTable={sortTable} category="indie" upDown={sortHeader} songs={filteredSplitSongs.indie} openModal={openModal} scrollToTop={() => scrollObj.indie.current.scrollIntoView({ behavior: "smooth" })}/>
+          <Table sortTable={sortTable} category="indie" upDown={sortHeader} songs={filteredSplitSongs.indie} openModal={openModal} scrollToTop={() => scrollObj.indie.current.scrollIntoView({ behavior: "smooth" })} />
         }
 
         {filteredSplitSongs.tv.length !== 0 &&
@@ -647,7 +658,7 @@ function Main() {
           </div>
         }
         {showTable.tv && filteredSplitSongs.tv.length !== 0 &&
-          <Table sortTable={sortTable} category="tv" upDown={sortHeader} songs={filteredSplitSongs.tv} openModal={openModal} scrollToTop={() => scrollObj.tv.current.scrollIntoView({ behavior: "smooth" })}/>
+          <Table sortTable={sortTable} category="tv" upDown={sortHeader} songs={filteredSplitSongs.tv} openModal={openModal} scrollToTop={() => scrollObj.tv.current.scrollIntoView({ behavior: "smooth" })} />
         }
 
         <div className="mt-5">
