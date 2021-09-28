@@ -8,11 +8,17 @@ require('dotenv').config();
 const express = require('express');
 const morgan = require('morgan');
 const session = require('express-session');
-const MongoStore = require('connect-mongo')(session);
+const MongoStore = require('connect-mongo');
+const mongoose = require('mongoose');
 const dbConnection = require('./db'); // loads our connection to the mongo database
 const routes = require("./routes");
 const app = express();
 const PORT = process.env.PORT || 3001;
+
+const clientP = mongoose.connect(
+	process.env.MONGODB_URI || "mongodb://localhost/rbsongs",
+	{ useNewUrlParser: true, useUnifiedTopology: true }
+  ).then(m => m.connection.getClient())
 
 // Middlewares
 app.use(morgan('dev'));
@@ -20,7 +26,9 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(session({
 	secret: process.env.APP_SECRET || 'this is the default passphrase',
-	store: new MongoStore({ mongooseConnection: dbConnection }),
+	store: MongoStore.create({ 
+		mongooseConnection: dbConnection, 
+		clientPromise: clientP}),
 	resave: false,
 	saveUninitialized: false
 }));
