@@ -497,7 +497,7 @@ function Main() {
         <div className="has-text-centered title is-2 has-text-light pt-5">Linos' Rock Band Charts</div>
         <div className="has-text-centered title is-4 has-text-light">Number of songs: {allSongs.length}</div>
         {allSongs[0] &&
-          <Spotlight song={allSongs[0]} />
+          <Spotlight song={allSongs} />
         }
         <div className="columns my-3">
           <div className="column is-9">

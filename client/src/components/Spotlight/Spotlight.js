@@ -1,50 +1,26 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./index.css";
 import moment from "moment";
+import SpotlightInfo from "../SpotlightInfo";
 
 function Spotlight(props) {
-
-  //Regex function get retrieves video ID from most youtube links
-  function YouTubeGetID(url) {
-    var ID = '';
-    url = url.replace(/(>|<)/gi, '').split(/(vi\/|v=|\/v\/|youtu\.be\/|\/embed\/)/);
-    if (url[2] !== undefined) {
-      ID = url[2].split(/[^0-9a-z_\-]/i);
-      ID = ID[0];
+  const [songs, setSongs] = useState([]);
+  useEffect(() => {
+    let songs = [];
+    for (let i = 0; i < props.song[0].pack; i++) {
+      songs.push(props.song[i]);
     }
-    else {
-      ID = url;
-    }
-    return ID;
-  }
+    setSongs(songs);
+  }, [props]);
 
   return (
     <>
       <hr />
       <div className="has-text-centered has-text-white title is-4 is-underlined">Latest Release</div>
-      <p className="has-text-centered has-text-white is-italic title is-4">{moment(props.song.release_date).format('MMMM Do, YYYY')}</p>
-      <div className="columns is-desktop">
-        <div className="column">
-          <a href={props.song.download} target="_blank" rel="noopener noreferrer">
-            <figure className="image">
-              <img src={props.song.preview} className="has-image-centered previewImage"></img>
-            </figure>
-          </a>
-        </div>
-        <div className="column">
-          <div className="video-responsive">
-            <iframe
-              width="853"
-              height="auto"
-              src={`https://www.youtube.com/embed/${YouTubeGetID(props.song.video)}`}
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-              title="Embedded youtube"
-            />
-          </div>
-        </div>
-      </div>
+      <p className="has-text-centered has-text-white is-italic title is-4">{moment(props.song[0].release_date).format('MMMM Do, YYYY')}</p>
+      {songs.map((song) => (
+        <SpotlightInfo song={song} />
+      ))}
       <hr />
     </>
   )
