@@ -19,7 +19,7 @@ function Spotlight(props) {
       <div className="has-text-centered has-text-white title is-4 is-underlined">Latest Release</div>
       <p className="has-text-centered has-text-white is-italic title is-4">{moment(props.song[0].release_date).format('MMMM Do, YYYY')}</p>
       {songs.map((song) => (
-        <SpotlightInfo song={song} />
+        <SpotlightInfo song={song} key={song._id} />
       ))}
       <hr />
     </>
