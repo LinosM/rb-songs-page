@@ -34,19 +34,6 @@ function Main() {
     vg: createRef(),
     tv: createRef()
   }
-  const [isDesktop, setDesktop] = useState(window.innerWidth > 1215);
-  const [isTablet, setTablet] = useState(window.innerWidth > 768 && window.innerWidth < 1216);
-  const [isMobile, setMobile] = useState(window.innerWidth < 504);
-  const updateMedia = () => {
-    setDesktop(window.innerWidth > 1215);
-    setTablet(window.innerWidth > 768 && window.innerWidth < 1216);
-    setMobile(window.innerWidth < 504);
-  };
-
-  useEffect(() => {
-    window.addEventListener("resize", updateMedia);
-    return () => window.removeEventListener("resize", updateMedia);
-  });
 
   const [showTable, setShowTable] = useState(
     {
@@ -142,6 +129,8 @@ function Main() {
                 break;
               case "tv":
                 songs.tv.push(song);
+                break;
+              default:
                 break;
             }
           })
@@ -390,6 +379,8 @@ function Main() {
           setSortHeader({ ...sortHeader, updated: true })
         }
         break;
+      default:
+        break;
     }
     setFilteredSplitSongs({ ...filteredSplitSongs, sortArray })
   }
@@ -527,11 +518,11 @@ function Main() {
                 <div className="columns is-gapless">
                   <div className="column">
                     <div className="columns is-gapless is-multiline is-mobile is-0">
-                      <div className="column"><figure className="image is-96x96 center"><img className="icon" src={insFilters.guitar ? Guitar : GuitarB} value="guitar" onClick={checked} /></figure></div>
-                      <div className="column"><figure className="image is-96x96 center"><img className="icon" src={insFilters.bass ? Bass : BassB} value="bass" onClick={checked} /></figure></div>
-                      <div className="column"><figure className="image is-96x96 center"><img className="icon" src={insFilters.drums ? Drums : DrumsB} value="drums" onClick={checked} /></figure></div>
-                      <div className="column"><figure className="image is-96x96 center"><img className="icon" src={insFilters.keys ? Keys : KeysB} value="keys" onClick={checked} /></figure></div>
-                      <div className="column"><figure className="image is-96x96 center"><img className="icon" src={insFilters.vocals ? Vocals : VocalsB} value="vocals" onClick={checked} /></figure></div>
+                      <div className="column"><figure className="image is-96x96 center"><img className="icon" alt="guitar" src={insFilters.guitar ? Guitar : GuitarB} value="guitar" onClick={checked} /></figure></div>
+                      <div className="column"><figure className="image is-96x96 center"><img className="icon" alt="bass" src={insFilters.bass ? Bass : BassB} value="bass" onClick={checked} /></figure></div>
+                      <div className="column"><figure className="image is-96x96 center"><img className="icon" alt="drums" src={insFilters.drums ? Drums : DrumsB} value="drums" onClick={checked} /></figure></div>
+                      <div className="column"><figure className="image is-96x96 center"><img className="icon" alt="keys" src={insFilters.keys ? Keys : KeysB} value="keys" onClick={checked} /></figure></div>
+                      <div className="column"><figure className="image is-96x96 center"><img className="icon" alt="vocals" src={insFilters.vocals ? Vocals : VocalsB} value="vocals" onClick={checked} /></figure></div>
                     </div>
                   </div>
                 </div>
