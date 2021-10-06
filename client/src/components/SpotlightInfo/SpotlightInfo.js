@@ -1,6 +1,5 @@
 import React from "react";
 import "./index.css";
-import moment from "moment";
 
 function Spotlight(props) {
 
@@ -24,7 +23,7 @@ function Spotlight(props) {
         <div className="column">
           <a href={props.song.download} target="_blank" rel="noopener noreferrer">
             <figure className="image">
-              <img src={props.song.preview} className="has-image-centered previewImage"></img>
+              <img src={props.song.preview} alt={props.song.name} className="has-image-centered previewImage"></img>
             </figure>
           </a>
         </div>
