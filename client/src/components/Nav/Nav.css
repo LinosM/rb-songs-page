@@ -1,0 +1,19 @@
+a:hover {
+    text-decoration: none;
+}
+
+#navbarBasicExample, #navbar-end {
+    background-color: rgb(54,54,54) !important;
+}
+
+.white {
+    color: white !important;
+}
+
+.is-active {
+    background-color: rgb(41,41,41) !important;
+}
+
+.inlineBlock {
+    display: inline-block;
+}
