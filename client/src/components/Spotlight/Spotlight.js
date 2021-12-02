@@ -7,6 +7,7 @@ function Spotlight(props) {
   const [songs, setSongs] = useState([]);
   useEffect(() => {
     let songs = [];
+    // Determines how many songs should the spotlight show from that last song's "pack" value
     for (let i = 0; i < props.song[0].pack; i++) {
       songs.push(props.song[i]);
     }
