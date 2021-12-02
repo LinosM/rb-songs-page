@@ -1,3 +1,4 @@
 module.exports = {
-  Song: require("./song")
+  Song: require("./song"),
+  Keys: require("./keys")
 };
