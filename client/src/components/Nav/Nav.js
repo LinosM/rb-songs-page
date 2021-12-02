@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Link, useLocation } from 'react-router-dom';
 import './Nav.css';
-import keyboard_icon from '../../images/keyboard_icon.png'
+import keyboard_icon from '../../images/keyboard_icon.png';
+import piano_icon from '../../images/piano-icon.png';
 
 const Nav = (props) => {
   const location = useLocation();
@@ -53,6 +54,17 @@ const Nav = (props) => {
       <div id="navbarBasicExample" className={`navbar-menu ${navActive ? 'is-active is-centered' : ''}`}>
 
         <div className="navbar-start ">
+        <Link
+            to="/keys"
+            className={
+              location.pathname === "/keys"
+                ? "navbar-item white is-active"
+                : "navbar-item white"
+            }
+          >
+            <span><img src={piano_icon} className="mr-2"></img></span>Keys
+          </Link>
+
           <Link
             to="/about"
             className={

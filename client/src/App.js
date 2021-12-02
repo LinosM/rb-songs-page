@@ -4,6 +4,7 @@ import Nav from "./components/Nav";
 import Wrapper from "./components/Wrapper";
 import Main from "./pages/Main";
 import About from "./pages/About";
+import Keys from "./pages/Keys";
 
 function App() {
   useEffect(() => {
@@ -18,6 +19,7 @@ function App() {
           <div className="main-view">
             <Switch>
               <Route exact path="/" component={Main} />
+              <Route exact path="/keys" component={Keys} />
               <Route exact path="/about" component={About} />
             </Switch>
           </div>
