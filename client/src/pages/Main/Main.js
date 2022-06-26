@@ -32,7 +32,8 @@ function Main() {
     reg: createRef(),
     indie: createRef(),
     vg: createRef(),
-    tv: createRef()
+    tv: createRef(),
+    all: createRef()
   }
 
   const [showTable, setShowTable] = useState(
@@ -492,14 +493,23 @@ function Main() {
         }
         <div className="columns my-3">
           <div className="column is-9">
-            <input
-              type="text"
-              className="input is-info"
-              placeholder="Search for songs.."
-              onChange={(e) => { setSearchBar(e.currentTarget.value) }}
-              value={searchBar}
-            >
-            </input>
+            <div class="field has-addons">
+              <div class="control is-expanded">
+                <input
+                  type="search"
+                  className="input is-info"
+                  placeholder="Search for songs.."
+                  onChange={(e) => { setSearchBar(e.currentTarget.value) }}
+                  value={searchBar}
+                >
+                </input>
+              </div>
+              <div class="control">
+                <a class="button is-danger has-text-white" onClick={() => { setSearchBar("") }}>
+                  Clear
+                </a>
+              </div>
+            </div>
           </div>
           <div className="column">
             <Filters
@@ -627,10 +637,9 @@ function Main() {
         }
 
         <div className="mt-5">
-          <div className="is-size-2 has-text-centered has-text-light">Last 10 Releases</div>
-          <div className="is-size-6 has-text-centered has-text-white is-italic">Last Updated: {allSongs[0] && moment(allSongs[0].updated_date).format("YYYY-MM-DD")}</div>
+          <div ref={scrollObj.all} className="is-size-2 has-text-centered has-text-light">Latest Releases</div>
           <hr />
-          <Table sortTable={sortTable} category="lastTen" upDown={sortHeader} songs={splitSongs.lastTen} openModal={openModal} />
+          <Table sortTable={sortTable} category="lastTen" upDown={sortHeader} songs={allSongs} openModal={openModal} scrollToTop={() => scrollObj.all.current.scrollIntoView({ behavior: "smooth" })} />
         </div>
 
       </div>
