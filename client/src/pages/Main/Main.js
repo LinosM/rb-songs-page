@@ -176,6 +176,11 @@ function Main() {
     else setShowTable({ ...showTable, [category]: false });
   }
 
+  // Clicking on the Artist or Source name will add it's value to the search bar
+  function clickSearch(name) {
+    {name && setSearchBar(name)}; // Will only set if clicked table is not blank
+  }
+
   /*
   If the user types anything into the searchbar, search results gets passed to the filterInstruments function
   If the user checks a box in the filter, the filtered results gets passed to the searchSong function
@@ -583,7 +588,7 @@ function Main() {
           </div>
         }
         {showTable.pony && filteredSplitSongs.pony.length !== 0 &&
-          <Table sortTable={sortTable} category="pony" upDown={sortHeader} songs={filteredSplitSongs.pony} openModal={openModal} scrollToTop={() => scrollObj.pony.current.scrollIntoView({ behavior: "smooth" })} />
+          <Table sortTable={sortTable} category="pony" upDown={sortHeader} songs={filteredSplitSongs.pony} openModal={openModal} scrollToTop={() => scrollObj.pony.current.scrollIntoView({ behavior: "smooth" })} clickSearch={clickSearch} />
         }
 
         {filteredSplitSongs.anime.length !== 0 &&
@@ -593,7 +598,7 @@ function Main() {
           </div>
         }
         {showTable.anime && filteredSplitSongs.anime.length !== 0 &&
-          <Table sortTable={sortTable} category="anime" upDown={sortHeader} songs={filteredSplitSongs.anime} openModal={openModal} scrollToTop={() => scrollObj.anime.current.scrollIntoView({ behavior: "smooth" })} />
+          <Table sortTable={sortTable} category="anime" upDown={sortHeader} songs={filteredSplitSongs.anime} openModal={openModal} scrollToTop={() => scrollObj.anime.current.scrollIntoView({ behavior: "smooth" })} clickSearch={clickSearch} />
         }
 
         {filteredSplitSongs.vg.length !== 0 &&
@@ -603,7 +608,7 @@ function Main() {
           </div>
         }
         {showTable.vg && filteredSplitSongs.vg.length !== 0 &&
-          <Table sortTable={sortTable} category="vg" upDown={sortHeader} songs={filteredSplitSongs.vg} openModal={openModal} scrollToTop={() => scrollObj.vg.current.scrollIntoView({ behavior: "smooth" })} />
+          <Table sortTable={sortTable} category="vg" upDown={sortHeader} songs={filteredSplitSongs.vg} openModal={openModal} scrollToTop={() => scrollObj.vg.current.scrollIntoView({ behavior: "smooth" })} clickSearch={clickSearch} />
         }
 
         {filteredSplitSongs.reg.length !== 0 &&
@@ -613,7 +618,7 @@ function Main() {
           </div>
         }
         {showTable.reg && filteredSplitSongs.reg.length !== 0 &&
-          <Table sortTable={sortTable} category="reg" upDown={sortHeader} songs={filteredSplitSongs.reg} openModal={openModal} scrollToTop={() => scrollObj.reg.current.scrollIntoView({ behavior: "smooth" })} />
+          <Table sortTable={sortTable} category="reg" upDown={sortHeader} songs={filteredSplitSongs.reg} openModal={openModal} scrollToTop={() => scrollObj.reg.current.scrollIntoView({ behavior: "smooth" })} clickSearch={clickSearch} />
         }
 
         {filteredSplitSongs.indie.length !== 0 &&
@@ -623,7 +628,7 @@ function Main() {
           </div>
         }
         {showTable.indie && filteredSplitSongs.indie.length !== 0 &&
-          <Table sortTable={sortTable} category="indie" upDown={sortHeader} songs={filteredSplitSongs.indie} openModal={openModal} scrollToTop={() => scrollObj.indie.current.scrollIntoView({ behavior: "smooth" })} />
+          <Table sortTable={sortTable} category="indie" upDown={sortHeader} songs={filteredSplitSongs.indie} openModal={openModal} scrollToTop={() => scrollObj.indie.current.scrollIntoView({ behavior: "smooth" })} clickSearch={clickSearch} />
         }
 
         {filteredSplitSongs.tv.length !== 0 &&
@@ -633,13 +638,13 @@ function Main() {
           </div>
         }
         {showTable.tv && filteredSplitSongs.tv.length !== 0 &&
-          <Table sortTable={sortTable} category="tv" upDown={sortHeader} songs={filteredSplitSongs.tv} openModal={openModal} scrollToTop={() => scrollObj.tv.current.scrollIntoView({ behavior: "smooth" })} />
+          <Table sortTable={sortTable} category="tv" upDown={sortHeader} songs={filteredSplitSongs.tv} openModal={openModal} scrollToTop={() => scrollObj.tv.current.scrollIntoView({ behavior: "smooth" })} clickSearch={clickSearch} />
         }
 
         <div className="mt-5">
           <div ref={scrollObj.all} className="is-size-2 has-text-centered has-text-light">Latest Releases</div>
           <hr />
-          <Table sortTable={sortTable} category="lastTen" upDown={sortHeader} songs={allSongs} openModal={openModal} scrollToTop={() => scrollObj.all.current.scrollIntoView({ behavior: "smooth" })} />
+          <Table sortTable={sortTable} category="lastTen" upDown={sortHeader} songs={allSongs} openModal={openModal} scrollToTop={() => scrollObj.all.current.scrollIntoView({ behavior: "smooth" })} clickSearch={clickSearch} />
         </div>
 
       </div>

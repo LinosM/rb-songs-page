@@ -75,14 +75,14 @@ function Table(props) {
           {props.category !== "lastTen" &&
             <>
             {props.songs && props.songs.map(song => (
-              <TableBody song={song} key={song._id} openModal={props.openModal} />
+              <TableBody song={song} key={song._id} openModal={props.openModal} clickSearch={props.clickSearch} />
             ))}
             </>
           }
           {props.category === "lastTen" &&
             <>
             {props.songs && props.songs.slice(0, count).map(song => (
-              <TableBody song={song} key={song._id} openModal={props.openModal} />
+              <TableBody song={song} key={song._id} openModal={props.openModal} clickSearch={props.clickSearch} />
             ))}
             </>
           }
