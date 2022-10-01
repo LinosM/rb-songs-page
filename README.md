@@ -5,3 +5,8 @@ Personal website listing all the custom songs I personally created for the music
 # Deployment
 
 https://linos-rock-band.herokuapp.com/
+
+
+# Preview
+
+![preview1](https://i.imgur.com/ff4nhsZ.png)
