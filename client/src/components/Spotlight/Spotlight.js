@@ -22,7 +22,7 @@ function Spotlight(props) {
   return (
     <>
       <hr />
-      <div className="has-text-centered has-text-white title is-4 is-underlined">{moment(props.song[0].updated_date) !== moment(props.song[0].release_date) ? "Updated Songs" : "Latest Release"}</div>
+      <div className="has-text-centered has-text-white title is-4 is-underlined">{moment(props.song[0].updated_date) !== moment(props.song[0].release_date) ? "Latest Release" : "Updated Songs"}</div>
       <p className="has-text-centered has-text-white is-italic title is-4">{moment(props.song[0].updated_date).format('MMMM Do, YYYY')}</p>
       {songs.map((song) => (
         <SpotlightInfo song={song} key={song._id} />
