@@ -41,6 +41,7 @@
     "morgan": "^1.10.0",
     "react-bulma-components": "^4.0.7",
     "react-modal": "^3.14.3",
+    "react-router-dom": "^6.17.0",
     "yarn": "^1.22.19"
   }
 }

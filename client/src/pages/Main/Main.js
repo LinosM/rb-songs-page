@@ -1,4 +1,5 @@
 import React, { useState, useEffect, createRef } from "react";
+import { useLocation } from 'react-router-dom';
 import Table from "../../components/Table";
 import Button from "../../components/Button";
 import API from "../../utils/API";
@@ -36,14 +37,18 @@ function Main() {
     all: createRef()
   }
 
+  // Grabs search query from URL and saves it to a variable
+  const [searchURLParams] = useState(useLocation().search.replace("?search=","").replaceAll("+"," "));
+
   const [showTable, setShowTable] = useState(
     {
-      pony: false,
-      anime: false,
-      reg: false,
-      indie: false,
-      vg: false,
-      tv: false
+      // Automatically opens up all tables if a search was defined in the URL
+      pony: (searchURLParams) ? true : false,
+      anime: (searchURLParams) ? true : false,
+      reg: (searchURLParams) ? true : false,
+      indie: (searchURLParams) ? true : false,
+      vg: (searchURLParams) ? true : false,
+      tv: (searchURLParams) ? true : false
     }
   );
   const [currentTable, setCurrentTable] = useState("");
@@ -143,6 +148,10 @@ function Main() {
           setSplitSongs(songs);
           setFilteredSplitSongs(songs);
         }
+      })
+      .then(() => {
+        // Populates the search bar with query from URL and searches for those songs
+        setSearchBar(searchURLParams);
       })
       .catch(err => console.log(err))
   }, []);
@@ -461,6 +470,11 @@ function Main() {
       multiKar: false
     });
     setSearchBar("");
+    let resetObj = {};
+    for (let category in showTable) {
+      resetObj = {[category]: false}
+    }
+    setShowTable(resetObj);
   }
 
   return (
@@ -510,7 +524,7 @@ function Main() {
                 </input>
               </div>
               <div className="control">
-                <a className="button is-danger has-text-white" onClick={() => { setSearchBar("") }}>
+                <a className="button is-danger has-text-white" onClick={() => {resetFilters()}}>
                   Clear
                 </a>
               </div>
